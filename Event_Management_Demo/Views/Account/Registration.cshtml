@@ -1,0 +1,61 @@
+﻿<div class="container-fluid">
+    <div class="row">
+        <div id="form" class="col-lg-4 col-md-12 col-sm-12 col-xs-12 align-self-center">
+            <form asp-controller="User" asp-action="Registration" method="post" class="col-lg-10 col-md-10 col-sm-10 col-xs-10 mx-auto" id="myform">
+
+
+                <div class="form-group mb-2">
+                    <label asp-for="FirstName" class="form-label">First Name</label>
+                    <input asp-for="FirstName" type="text" class="form-control" id="exampleFirstName" placeholder="Enter Your Frist-Name">
+                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="LastName" class="form-label">Last Name</label>
+                    <input asp-for="LastName" type="text" class="form-control" id="exampleLastName" placeholder="Enter Your Last Name">
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                    <input asp-for="PhoneNumber" type="tel" class="form-control" name="phone" value=""
+                           placeholder="Enter Your Phone Number" id="myform_phone" pattern="^[6-9]{1}[0-9]{9}$">
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                @if (ViewBag.RegistrationStatus != null)
+                {
+                    if (ViewBag.RegistrationStatus == 0)
+                    {
+                        <script>alert("Invalid Credentials")</script>
+
+                    }
+                }
+                <div class="form-group mb-2">
+                    <label asp-for="Email" class="form-label">Email address</label>
+                    <input asp-for="Email" type="email" class="form-control" id="exampleemail" aria-describedby="emailHelp"
+                           placeholder="Enter YourEmail ID">
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-2">
+                    <label asp-for="Password" class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Create Your Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1" class="form-label">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password">
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <button id="register-btn" class="btn btn-primary col-12 my-4" type="submit" onclick="return Validate()">Register </button>
+
+                <div id="lost-password-div" class="">
+                    <a asp-controller="User" asp-action="ForgotPassword" id="lost-password" class="">Lost your password?</a>
+                    <p class="mt-2">Already registered?<a asp-controller="User" asp-action="Login" class="px-2">Login now</a></p>
+                </div>
+            </form>
+            <div class="text-center align-bottom pp">
+
+                <span style="font-size: 14px; color: gray">Privacy Policy</span>
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "86735df1-7454-4216-b45e-afc0146f0a5f": {
+      "ProjectGuid": "86735df1-7454-4216-b45e-afc0146f0a5f",
+      "DisplayName": "Event_Management_Demo",
+      "ColorIndex": 0
+    },
+    "c6587683-6b5e-40c2-91b4-1241c2282dff": {
+      "ProjectGuid": "c6587683-6b5e-40c2-91b4-1241c2282dff",
+      "DisplayName": "Event_Management.Entities",
+      "ColorIndex": 1
+    },
+    "94eee8c1-3eec-4e90-9ab6-665b0d9f421d": {
+      "ProjectGuid": "94eee8c1-3eec-4e90-9ab6-665b0d9f421d",
+      "DisplayName": "Event_Management.Repository",
+      "ColorIndex": 2
+    },
+    "e4a64ec6-fc8c-452b-8320-4cc4a0e78c21": {
+      "ProjectGuid": "e4a64ec6-fc8c-452b-8320-4cc4a0e78c21",
+      "DisplayName": "EventServices",
+      "ColorIndex": 3
+    }
+  },
+  "NextColorIndex": 4
+}
