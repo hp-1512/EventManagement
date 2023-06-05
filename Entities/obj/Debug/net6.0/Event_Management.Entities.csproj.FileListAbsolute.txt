@@ -1,0 +1,12 @@
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\bin\Debug\net6.0\Event_Management.Entities.deps.json
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\bin\Debug\net6.0\Event_Management.Entities.dll
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\bin\Debug\net6.0\ref\Event_Management.Entities.dll
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\bin\Debug\net6.0\Event_Management.Entities.pdb
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.csproj.AssemblyReference.cache
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.GeneratedMSBuildEditorConfig.editorconfig
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.AssemblyInfoInputs.cache
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.AssemblyInfo.cs
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.csproj.CoreCompileInputs.cache
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.dll
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\ref\Event_Management.Entities.dll
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.pdb

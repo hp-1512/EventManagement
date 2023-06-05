@@ -19,6 +19,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3RyYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Email/ConfirmEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcQ29uZmlybUVtYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Email/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -29,6 +37,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Shared/_LayoutAccount.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXRBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Shared/_ValidationScriptsPartial.cshtml]
