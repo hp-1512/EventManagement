@@ -1,24 +1,32 @@
 ﻿using Event_Management.Entities.Models;
+using Event_Management.Repository.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Event_Management_Demo.Controllers
 {
+    
     public class EmailController : Controller
     {
-        public EmailController()
+        private readonly IAccountRepository _acc;
+        public EmailController(IAccountRepository acc)
         {
-
+            _acc = acc;
         }
-
-        //public async Task<IActionResult> ConfirmEmail(string token, string email)
-        //{
-        //    var user = await _userManager.FindByEmailAsync(email);
-        //    if (user == null)
-        //        return View("Error");
-
-        //    var result = await _userManager.ConfirmEmailAsync(user, token);
-        //    return View(result.Succeeded ? "ConfirmEmail" : "Error");
-        //}
+        [HttpGet]
+        public IActionResult ConfirmEmail(string email, string token)
+        {
+            var userToken = _acc.GetRegistrationToken(email, token);
+            if (userToken.Result == null)
+            {
+                return View("Error");
+            }
+            else
+            {
+                _acc.ApproveRegStatus(email);
+                return View("ConfirmEmail");
+            }
+        }
     }
 }

@@ -1,8 +1,27 @@
 ﻿@{
     ViewData["Title"] = "ConfirmEmail";
 }
- 
-<h1>Confirm Email</h1>
-<p>
-    Thank you for confirming your email.
-</p>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .verified-icon {
+        margin-top: 100px;
+        font-size: 100px;
+        color: green;
+    }
+
+    .verified-text {
+        margin-top: 20px;
+        font-size: 24px;
+        color: green;
+    }
+</style>
+
+<div style="margin:15% 0;">
+    <h1 style="color: green;">Verified</h1>
+    <div class="verified-icon">&#10004;</div>
+    <div class="verified-text">Email Verification completed Successfully!</div>
+</div>

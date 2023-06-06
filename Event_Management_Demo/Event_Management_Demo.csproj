@@ -16,4 +16,8 @@
     <ProjectReference Include="..\Event_Management.Repository\Event_Management.Repository.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+  </ItemGroup>
+
 </Project>

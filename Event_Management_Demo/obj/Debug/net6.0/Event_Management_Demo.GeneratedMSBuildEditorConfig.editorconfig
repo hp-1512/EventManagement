@@ -15,12 +15,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Event_Management_Demo
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Account/Registration.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxSZWdpc3RyYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Email/ConfirmEmail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcQ29uZmlybUVtYWlsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Email/EmailSent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcRW1haWxTZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Email/Error.cshtml]

@@ -1,0 +1,46 @@
+﻿@model Event_Management.Entities.Models.UserLogin
+@{
+    ViewData["Title"] = "Login Page";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+<div class="container-fluid mx-0 my-auto">
+    <div class="row" style="height:100vh">
+        <div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 ps-0">
+
+            <div class="carousel-item active">
+                <img src="~/Images/Poster3.jpg"
+                     class="d-block  w-100" alt="..." style="height:100vh">
+            </div>
+
+
+        </div>
+        <div id="form" class="col-lg-4 col-md-12 col-sm-12 col-xs-12 align-self-center my-auto">
+            <form asp-controller="Account" asp-action="Login" method="post" class="form-group" class="col-lg-10 col-md-10 col-sm-10 col-xs-10 mx-auto ">
+                @if(TempData["error"] != null){
+                    <div class="alert alert-danger">
+                        @TempData["error"]
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="form-label">User Name</label>
+                    <input asp-for="UserName" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                           placeholder="Enter Your Email ID">
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group mt-3">
+                    <label class="form-label">Password</label>
+                    <input asp-for="Password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Enter Your Password">
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <button id="login-btn" class="btn btn-primary col-12 mt-4 mb-3" type="submit">Login</button>
+
+                <div id="lost-password-div" class="">
+                    <a asp-controller="Account" asp-action="ForgotPassword" id="lost-password" class="pt-6">Lost your password?</a>
+                    <p class="mt-3">Don't have an account? <a asp-controller="Account" asp-action="Registration">Create an account</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

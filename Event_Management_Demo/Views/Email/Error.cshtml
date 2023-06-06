@@ -1,9 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Error";
 }
- 
-<h1 class="text-danger">Error</h1>
-<h2 class="text-danger">
-  An error occurred while processing your request. 
-  Please try again later.
-</h2>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+
+    .error-icon {
+        margin-top: 100px;
+        font-size: 100px;
+        color: red;
+    }
+
+    .error-text {
+        margin-top: 20px;
+        font-size: 24px;
+        color: red;
+    }
+</style>
+
+<div style="margin:15% 0;">
+    <h1 class="text-danger">Error</h1>
+
+    <div class="error-icon">&#10008;</div>
+    <div class="error-text">
+        An error occurred while processing your request.
+        Please try again later.
+    </div>
+</div>
+

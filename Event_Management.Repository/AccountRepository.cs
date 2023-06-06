@@ -20,14 +20,42 @@ namespace Event_Management.Repository
         {
             _context = context;
         }
-        #region Unique User Name Validation
-        public async Task<User> GetUserName(string UserName)
+
+        #region Unique User Name, Email Validation and Active User validation for Login
+        public async Task<User> GetUserName(string userName)
         {
             var query = "SELECT username FROM tblUser WHERE isActive = 1 AND username = @UserName";
 
             using (var connection = _context.CreateConnection())
             {
-                var user = await connection.QuerySingleOrDefaultAsync<User>(query, new { UserName });
+                var user = await connection.QuerySingleOrDefaultAsync<User>(query, new { userName });
+                return user;
+            }
+        }
+        public async Task<User> GetEmail(string email)
+        {
+            var query = "SELECT email FROM tblUser WHERE email = @email";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var user = await connection.QuerySingleOrDefaultAsync<User>(query, new { email });
+                return user;
+            }
+        }
+
+        public async Task<User> IfActiveUser(string userName, string password)
+        {
+            password = GetHashPassword(password);
+            var query = "SELECT username,email,password FROM tblUser WHERE isActive = 1 AND username = @UserName AND password = @Password";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserName", userName, DbType.String);
+            parameters.Add("@Password",password,DbType.String);
+
+            using (var connection = _context.CreateConnection())
+            {
+                 var user = await connection.QuerySingleOrDefaultAsync<User>(query, parameters);
+                
                 return user;
             }
         }
@@ -72,6 +100,7 @@ namespace Event_Management.Repository
         #endregion
 
         #region Email Confirmation Operations
+        //Storing Token When Register Button hit
         public async Task StoreToken(RegistrationStatus tokenModel)
         {
             var query = "INSERT INTO tblRegistrationStatus (user_id,email,token) VALUES(@UserId,@Email,@Token)";
@@ -83,6 +112,45 @@ namespace Event_Management.Repository
             using (var connection = _context.CreateConnection())
             {
                 await connection.QuerySingleAsync(query, parameters);
+
+            }
+        }
+
+        //Fetching and Validating the token for the user While Verifying Email
+        public async Task<RegistrationStatus> GetRegistrationToken(string email, string token)
+        {
+            var query = "SELECT user_id,email,token FROM tblRegistrationStatus WHERE email = @email AND token = @token AND deleted_at IS NULL";
+
+            using (var connection = _context.CreateConnection())
+            {
+                var regUser = await connection.QuerySingleOrDefaultAsync<RegistrationStatus>(query, new { email, token });
+                return regUser;
+            }
+        }
+
+        //After Successful Verification Updating Flag in Database for Successfull Registration and performing Soft delete for token
+        public async Task ApproveRegStatus(string email)
+        {
+            var query = "UPDATE tblUser SET isRegSuccess = @IsRegSuccess,isActive = @IsActive WHERE email = @Email" +" "+
+                 "UPDATE tblRegistrationStatus SET deleted_at = @CurrentDate WHERE email = @Email";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@IsRegSuccess",1, DbType.Int32);
+            parameters.Add("@IsActive",0, DbType.Int32);
+            parameters.Add("@Email", email, DbType.String);
+            parameters.Add("@CurrentDate", DateTime.Now, DbType.String);
+
+            using (var connection = _context.CreateConnection())
+            {
+                try
+                {
+
+                await connection.QueryMultipleAsync(query, parameters);
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine(ex);
+                }
 
             }
         }

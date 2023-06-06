@@ -15,11 +15,14 @@ namespace Event_Management.Entities.Models
         [Required(ErrorMessage ="First Name is Required")]
         [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "only alphabet")]
         public string FirstName { get; set; }
+
         [Required(ErrorMessage = "Last Name is Required")]
         [RegularExpression("^[a-zA-Z]+$", ErrorMessage = "only alphabet")]
         public string LastName { get; set; }
+
         [Required(ErrorMessage = "Email ID is Required")]
         [RegularExpression("\\w+([-+.']\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*", ErrorMessage="Invalid EmailID")]
+        [Remote("IfEmailExist", "Account", AdditionalFields = "Email", ErrorMessage = "EmailID Exists! Please use different Email Id.")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Password Name is Required")]
         [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",

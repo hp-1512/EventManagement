@@ -9,9 +9,13 @@ namespace Event_Management.Repository.Interface
 {
     public interface IAccountRepository
     {
-        public Task<User> GetUserName(string UserName);
-        public Task<long> CreateUser(User userModel);
+        public Task<User> GetUserName(string userName);
+        public Task<User> GetEmail(string email);
+        public Task<User> IfActiveUser(string userName,string password);
         public  string GetHashPassword(string text);
+        public Task<long> CreateUser(User userModel);
         public Task StoreToken(RegistrationStatus tokenModel);
+        public Task<RegistrationStatus> GetRegistrationToken(string token, string email);
+        public Task ApproveRegStatus(string email);
     }
 }
