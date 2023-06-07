@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .canvasjs-chart-credit
+{
+    display: none !important;
+}
+</style>
+<div class="row">
+    <div class="col-md-6 col-sm-12" id="events-pie">
+        <canvas id="eventsPieChartContainer" style="height: 100%; width: 100%;"></canvas>
+    </div>
+    <div class="col-md-6 col-sm-12" id="users-pie">
+        <canvas id="usersPieChartContainer" style="height: 100%; width: 100%;"></canvas>
+    </div>
+    <div class="col-md-12 col-sm-12" id="events-bar">
+        <canvas id="eventsBarChartContainer" style="height: 100%; width: 100%;"></canvas>
+    </div>
+</div>
+<script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" asp-append-version="true"></script>
+<script src="~/js/DashboardScript.js" asp-append-version="true"></script>
+<script>
+    $(document).ready(function () {
+        DashboardData();
+    });
+</script>
