@@ -3,25 +3,33 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
-    .canvasjs-chart-credit
-{
-    display: none !important;
-}
+    .canvasjs-chart-credit {
+        display: none !important;
+    }
 </style>
 <div class="row">
     <div class="col-md-6 col-sm-12" id="events-pie">
-        <canvas id="eventsPieChartContainer" style="height: 100%; width: 100%;"></canvas>
+        <div style="height: 100%; width: 70%;">
+            <canvas class="me-0" id="eventsPieChartContainer"></canvas>
+
+        </div>
     </div>
-    <div class="col-md-6 col-sm-12" id="users-pie">
-        <canvas id="usersPieChartContainer" style="height: 100%; width: 100%;"></canvas>
+    <div class="col-md-6 col-sm-12 pt-1" id="users-pie">
+        <div style="height: 100%; width: 70%;">
+
+            <canvas id="usersPieChartContainer"></canvas>
+        </div>
     </div>
+
+</div>
+<div class="row mt-4">
     <div class="col-md-12 col-sm-12" id="events-bar">
-        <canvas id="eventsBarChartContainer" style="height: 100%; width: 100%;"></canvas>
+        <canvas id="eventsBarChartContainer" style="height: 450px; width: 100%;"></canvas>
     </div>
 </div>
 <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js" asp-append-version="true"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.min.js" asp-append-version="true"></script>
 <script src="~/js/DashboardScript.js" asp-append-version="true"></script>
 <script>
     $(document).ready(function () {

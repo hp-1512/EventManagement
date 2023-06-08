@@ -40,8 +40,8 @@ namespace Event_Management.Repository
         }
         public UserStatusData UsersDataForPieChart()
         {
-            var query = "SELECT COUNT(user_id) AS ActiveUsers FROM tblUser WHERE isActive = 1 " +
-                "SELECT COUNT(user_id) AS InactiveUsers FROM tblUser WHERE isActive = 0 ";
+            var query = "SELECT SUM(CASE WHEN isActive = 1 THEN 1 ELSE 0 END) AS ActiveUsers," +
+                "SUM(CASE WHEN isActive = 0 THEN 1 ELSE 0 END) AS InactiveUsers FROM tblUser";
             using (var connection = _context.CreateConnection())
             {
 
@@ -49,8 +49,9 @@ namespace Event_Management.Repository
                 {
                     var userStatusData = new UserStatusData();
 
-                    userStatusData.ActiveUsers = multi.ReadSingleOrDefault<int>();
-                    userStatusData.InactiveUsers = multi.ReadSingleOrDefault<int>();
+                    var results = multi.Read();
+                    userStatusData.ActiveUsers = results.Single().ActiveUsers;
+                    userStatusData.InactiveUsers = results.Single().InactiveUsers;
 
                     return userStatusData;
                 }

@@ -17,6 +17,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<DapperContext>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IEventsPageRepository, EventsPageRepository>();
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();
 
 var app = builder.Build();

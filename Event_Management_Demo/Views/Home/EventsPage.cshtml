@@ -1,0 +1,137 @@
+﻿@{
+    var systemdate = DateTime.Now.Date;
+}
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Event_Management.Entities.Models.EventsDetailList
+
+
+<div class="container grid-container">
+    <div class="row my-4 justify-content-between">
+        <h3 class=" col-md-8">@Model.ListOfEvents.Count() Events</h3>
+        <div class="col-4">
+
+            <a class="btn btn-primary" asp-action="CreateEvent" asp-controller="Home">Create Event</a>
+        </div>
+    </div>
+    <div class="row justify-content-center ">
+        @foreach (var item in Model.ListOfEvents)
+        {
+            <div class="col-12 col-md-6 col-lg-4 mb-4 align-items-stretch">
+                <div class="card">
+                    <div id="img-part-card" style="position: relative; height:240px">
+
+                        @if (Model.ListOfEvents != null)
+                        {
+
+                            if (@item.StartDate.Date <= @systemdate && @item.EndDate.Date >= @systemdate)
+                            {
+                                <div class="d-flex position-absolute pt-2 badgeclass" style="z-index: 2;">
+                                    <span class="badge1 bg-success text-dark ms-1 py-2">OnGoing</span>
+                                </div>
+                            }
+                            else if (@item.EndDate.Date < @systemdate)
+                            {
+                                <div class="d-flex position-absolute pt-2 badgeclass" style="z-index: 2;">
+                                    <span class="badge1 bg-warning text-dark ms-1 py-2">Completed<i class="bi bi-patch-check text-white  px-2"></i></span>
+                                </div>
+                            }
+                            else if (@item.StartDate.Date > @systemdate)
+                            {
+                                <div class="d-flex position-absolute pt-2 badgeclass" style="z-index: 2;">
+                                    <span class="badge1 bg-info text-dark ms-1 py-2 ">Upcoming<i class="bi bi-patch-exclamation text-white px-2"></i></span>
+                                </div>
+                            }
+                        }
+
+                        @if (item.EventImage != null)
+                        {
+                            <img class="card-img-top h-100 mission-img"
+                         src="/Images/@item.EventImage"
+                         alt="Card image cap" style="z-index: 1;">
+                        }
+                        else
+                        {
+
+                            <img class="card-img-top" id="mission-img"
+                         src="/Images/NoImg.jpg"
+                         alt="Card image cap" style="z-index: 1;">
+                        }
+
+                    </div>
+                    <div class="card-body p-0">
+                        <h5 class="card-title mt-3 px-3 search-inp" style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">@item.EventTitle</h5>
+                        <div class="card-text px-3" style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">@Html.Raw(@item.EventDesc)</div>
+                        @*<div class="d-flex justify-content-between px-3">
+                            <div>
+                            <p>@item.</p>
+                            </div>
+
+                            </div>*@
+                        <div class="d-flex flex-wrap justify-content-around align-items-center px-3 py-3">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-person-circle me-2"></i>
+                                <div>
+                                    <small>Creator:</small>
+                                    <p class="mb-0">@item.Creator</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-geo-alt-fill me-2"></i>
+                                <div>
+                                    <small>Vanue:</small>
+                                    <p class="mb-0">@item.Vanue</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top border-bottom mt-3" id="missionInfo" style="position: relative;">
+                            <div class="border text-center" id="missionPeriod">
+                                @{
+
+                                    @if (@systemdate > @item.StartDate && @systemdate < @item.EndDate)
+                                    {
+                                        <small>Ongoing Opportunity</small>
+                                    }
+                                    else
+                                    {
+                                        <small>@item.StartDate.ToShortDateString()  to @item.EndDate.ToShortDateString()</small>
+                                    }
+                                }
+
+                            </div>
+                            @*<div class="d-flex flex-wrap justify-content-around align-items-center px-4 py-3">
+                                <div class="d-flex align-items-center">
+                                <img class="me-2" height="20" src="/CI Platform Assets/Seats-left.png" alt="">
+                                <div>
+                                <p class="mb-0">@item.Seats</p>
+                                <small>Seats Left</small>
+                                </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                <img class="me-2" height="25" src="/CI Platform Assets/deadline.png" alt="">
+                                <div>
+
+                                <p class="mb-0">@item.StartDate.Value.AddDays(-1).ToShortDateString()</p>
+                                <small>Deadline</small>
+                                </div>
+                                </div>
+                                </div>*@
+                        </div>
+
+
+
+                        <div>
+                            <a asp-controller="Home" asp-action="Participate"
+                           class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-id=@item.EventId>
+                                Participate
+                                <span class="ps-2">⟶</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

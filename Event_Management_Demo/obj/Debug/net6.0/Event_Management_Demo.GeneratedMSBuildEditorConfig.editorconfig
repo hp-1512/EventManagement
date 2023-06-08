@@ -35,16 +35,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1haWxcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Home/CreateEvent.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDcmVhdGVFdmVudC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Home/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+[D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Home/EventsPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFdmVudHNQYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/HP/ci-project-main/ci-project-main/MVC/Event_Management_Demo/Event_Management_Demo/Views/Shared/Error.cshtml]

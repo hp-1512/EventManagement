@@ -6,9 +6,11 @@
     return date.toLocaleString([], { month: 'long' });
 }
 
+
+//-------------------------------------------------------------------------------------------------
+//Pie chart for Events Status Summary
 function DashboardData() {
-    //-------------------------------------------------------------------------------------------------
-    //Pie chart for Events Status Summary
+
     $.ajax({
 
         url: "/Methods/EventsDataPieChart",
@@ -20,17 +22,17 @@ function DashboardData() {
                 data: {
                     labels: ["Completed Events", "Ongoing Events", "Upcoming Events"],
                     datasets: [{
-                        backgroundColor: ["#b91d47","#00aba9","#2b5797"],
+                        backgroundColor: ["rgba(185, 29, 71, 0.7)", "rgba(0, 171, 169, 0.7)", "rgba(43, 87, 151, 0.7)"],
                         data: [result.completedEvents, result.ongoingEvents, result.upcomingEvents],
                     }]
                 },
                 options: {
-                    
-                    title: {
-                        display: true,
-                        text: 'Insights Of Events'
-                    }
-
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Insights Of Events'
+                        },
+                    },
                 },
             });
         },
@@ -52,17 +54,17 @@ function DashboardData() {
                 data: {
                     labels: ["Active Users", "Inactive Users"],
                     datasets: [{
-                        backgroundColor: ["#e8c3b9","#1e7145"],
+                        backgroundColor: ['rgba(232, 195, 185, 0.7)', 'rgba(30, 113, 69, 0.7)'],
                         data: [data.activeUsers, data.inactiveUsers],
                     }]
                 },
                 options: {
-
-                    title: {
-                        display: true,
-                        text: 'Insights Of Users'
-                    }
-
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Insights Of Users'
+                        },
+                    },
                 },
             });
         },
@@ -85,43 +87,67 @@ function DashboardData() {
                 months.push(getMonthName(item.month));
                 values.push(item.totalEvents);
             });
+            var range = (Math.max.apply(null, values) + 1);
             new Chart("eventsBarChartContainer", {
                 type: 'bar',
                 data: {
                     labels: months,
-                    datasets: [
-                        {
-                            label: 'Total Events',
-                            data: values,
-                            borderColor: 'rgb(255, 99, 132)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                        }
-                    ]
+                    datasets: [{
+                        label: 'Number of Events Conducted',
+                        data: values,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            'rgba(17, 46, 81, 0.2)',
+                            'rgba(133, 58, 34, 0.2)',
+                            'rgba(54, 158, 82, 0.2)',
+                            'rgba(71, 11, 97, 0.2)',
+                            'rgba(101, 112, 26, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)',
+                            'rgb(17, 46, 81)',
+                            'rgb(133, 58, 34)',
+                            'rgb(54, 158, 82)',
+                            'rgb(71, 11, 97)',
+                            'rgb(101, 112, 26)',
+                        ],
+                        borderWidth: 1.3
+                    }]
                 },
                 options: {
-                    title: {
-                        display: true,
-                        text: 'Annual Report of Events Conducted'
-                    },
-                    indexAxis: 'y',
+                    /*indexAxis: 'y',*/
                     scales: {
                         y: {
                             beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                stepSize: 10, // Adjust the step size of the ticks if needed
-                            },
+                            max: range,
                         }
                     },
-                    elements: {
-                        bar: {
-                            borderWidth: 2,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Annual Summary of Total Events Conducted'
                         }
-                    },
-                    responsive: true,
+                    }
                 },
+
+
             });
-           
+
         },
         error: function (error) {
             console.log(error);

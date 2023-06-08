@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Event_Management_Demo.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Sidebar.css" asp-append-version="true" />
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" asp-append-version="true" />
 </head>
 <body>
     <div class="container-fluid">
@@ -19,25 +19,24 @@
                         <span class="fs-5 d-none d-sm-inline">Menu</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-
                         <li class="nav-item w-100">
                             <a asp-action="Dashboard" asp-controller="Home" class="nav-link px-0 align-middle">
-                                <img class="sidebar-icon" src="https://img.icons8.com/ios-filled/50/laptop-metrics.png" alt="laptop-metrics"/> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img class="sidebar-icon" src="https://img.icons8.com/ios-filled/50/laptop-metrics.png" alt="laptop-metrics" /> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
                         <li class="nav-item w-100">
                             <a asp-controller="Home" asp-action="EventsPage" class="nav-link align-middle px-0">
-                               <img class="sidebar-icon" src="https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-calender-time-and-date-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png"/> <span class="ms-1 d-none d-sm-inline"> Events page</span>
+                                <img class="sidebar-icon" src="https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-calender-time-and-date-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png" /> <span class="ms-1 d-none d-sm-inline"> Events page</span>
                             </a>
                         </li>
                         <li class="nav-item w-100">
                             <a asp-controller="Home" asp-action="CreatedEvents" class="nav-link px-0 align-middle">
-                                <img class="sidebar-icon" src="https://img.icons8.com/dotty/80/event-management.png" alt="event-management"/> <span class="ms-1 d-none d-sm-inline">My Created Events</span>
+                                <img class="sidebar-icon" src="https://img.icons8.com/dotty/80/event-management.png" alt="event-management" /> <span class="ms-1 d-none d-sm-inline">My Created Events</span>
                             </a>
                         </li>
                         <li class="nav-item w-100">
                             <a asp-controller="Home" asp-action="ParticipatedEvents" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <img class="sidebar-icon" src="https://img.icons8.com/ios/50/event-accepted.png" alt="event-accepted"/> <span class="ms-1 d-none d-sm-inline"> My Participated Events</span>
+                                <img class="sidebar-icon" src="https://img.icons8.com/ios/50/event-accepted.png" alt="event-accepted" /> <span class="ms-1 d-none d-sm-inline"> My Participated Events</span>
                             </a>
                         </li>
                     </ul>

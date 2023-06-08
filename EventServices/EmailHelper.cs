@@ -25,7 +25,7 @@ namespace EventServices
             var smtpClient = new SmtpClient("smtp.gmail.com", 587)
             {
                 UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("harahapatel1512@gmail.com", ""),
+                Credentials = new NetworkCredential("harahapatel1512@gmail.com", "jlstnfiaynwtvpvf"),
                 EnableSsl = true
             };
             

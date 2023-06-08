@@ -2,6 +2,7 @@ D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\bi
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\bin\Debug\net6.0\EventServices.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\bin\Debug\net6.0\ref\EventServices.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\bin\Debug\net6.0\EventServices.pdb
+D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.csproj.AssemblyReference.cache
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.GeneratedMSBuildEditorConfig.editorconfig
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.AssemblyInfoInputs.cache
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.AssemblyInfo.cs
@@ -9,4 +10,3 @@ D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\ob
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\ref\EventServices.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.pdb
-D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.csproj.AssemblyReference.cache
