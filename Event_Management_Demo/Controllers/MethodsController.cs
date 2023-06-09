@@ -1,6 +1,7 @@
 ﻿using Event_Management.Entities.Models;
 using Event_Management.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Event_Management_Demo.Controllers
 {
@@ -28,6 +29,14 @@ namespace Event_Management_Demo.Controllers
         {
             var annualEvents = _dash.AnnualEventsData();
             return Json(annualEvents);
+        }
+        [HttpGet]
+        public User LoggedUser()
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var email = identity?.FindFirst(ClaimTypes.Email)?.Value;
+            var user = _dash.GetThisUser(email);
+            return user;
         }
     }
 }

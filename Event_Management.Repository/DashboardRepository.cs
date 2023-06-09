@@ -68,5 +68,16 @@ namespace Event_Management.Repository
                 
             }
         }
+
+        public User GetThisUser(string email)
+        {
+            var query = " SELECT user_id as UserId,first_name as FirstName,last_name as LastName,email as Email,username as UserName FROM tblUser WHERE email = @email";
+            using (var connection = _context.CreateConnection())
+            {
+
+                var user1 = connection.QuerySingle<User>(query, new { email });
+                return user1;
+            }
+        }
     }
 }

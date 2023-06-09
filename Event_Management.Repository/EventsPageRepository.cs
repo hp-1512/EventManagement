@@ -2,8 +2,10 @@
 using Event_Management.Entities.Context;
 using Event_Management.Entities.Models;
 using Event_Management.Repository.Interface;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,14 +31,125 @@ namespace Event_Management.Repository
                 try
                 {
 
-                var result = connection.Query<Event>(query).AsList();
-                return result;
+                    var result = connection.Query<Event>(query).AsList();
+                    return result;
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex);
                     return null;
                 }
+            }
+        }
+
+        public void DeleteImage(long eventId)
+        {
+            var deleteImage = "DELETE * from  tblEventMedia where event_id = @eventId";
+            using (var connection = _context.CreateConnection())
+            {
+                var user = connection.Execute(deleteImage, new { eventId });
+            }
+        }
+        public void SaveEventImages(long eventId, List<EventImages> eventImagesList, List<IFormFile> missionImageFiles, string[] preloadedmissimage)
+        {
+            foreach (var missionMedia in eventImagesList)
+            {
+
+                if (preloadedmissimage.Length < 1)
+                {
+                    string missImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", missionMedia.Path);
+
+                    if (System.IO.File.Exists(missImagePath))
+                    {
+                        System.IO.File.Delete(missImagePath);
+                    }
+
+                    DeleteImage(eventId);
+                }
+                else
+                {
+                    bool flag = false;
+                    for (int i = 0; i < preloadedmissimage.Length; i++)
+                    {
+                        string imgName = preloadedmissimage[i][14..];
+
+                        if (imgName.Equals(missionMedia.Path))
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (!flag)
+                    {
+                        string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", missionMedia.Path);
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+                        DeleteImage(eventId);
+
+
+                    }
+                }
+
+            }
+
+            if (missionImageFiles?.Count > 0)
+            {
+                foreach (var image in missionImageFiles)
+                {
+                    string imgExt = Path.GetExtension(image.FileName);
+                    if (imgExt == ".jpg" || imgExt == ".png" || imgExt == ".jpeg")
+                    {
+                        string imageName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+                        string imgSaveTo = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/" + imageName);
+                        using (FileStream stream = new(imgSaveTo, FileMode.Create))
+                        {
+                            image.CopyTo(stream);
+                        }
+                        // logic to save image in db
+                    var queryEventMedia = "INSERT INTO tblEventMedia([event_id],[path]) VALUES (@eventId,@path)";
+                    var parameters = new DynamicParameters();
+                    parameters.Add("@eventId", eventId, DbType.Int64);
+                    parameters.Add("@path", imageName, DbType.String);
+                    using (var connection = _context.CreateConnection())
+                    {
+                        var imageInsert = connection.Execute(queryEventMedia,parameters);
+                    }
+                    }
+                }
+            }
+        }
+        public bool CreateEventDb(EventCreation eventObj, List<IFormFile> eventImages, string[] preloaded)
+        {
+            try
+            {
+                var queryEvent = "INSERT INTO tblEvent([title],[description],[note],[start_date],[end_date],[vanue],[created_by],[max_participant])" +
+                        "VALUES(@eventTitle,@eventDesc,@note,@startDate,@endDate,@vanue,@createdBy,@maxParticipant)" +
+                        "SELECT CAST(SCOPE_IDENTITY() as bigint)";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@eventTitle", eventObj.EventTitle, DbType.String);
+                parameters.Add("@eventDesc", eventObj.EventDesc, DbType.String);
+                parameters.Add("@note", eventObj.Note, DbType.String);
+                parameters.Add("@startDate", eventObj.StartDate, DbType.DateTime);
+                parameters.Add("@endDate", eventObj.EndDate, DbType.DateTime);
+                parameters.Add("@vanue", eventObj.Vanue, DbType.String);
+                parameters.Add("@createdBy", eventObj.CreatedBy, DbType.Int64);
+                parameters.Add("@maxParticipant", eventObj.MaxParticipants, DbType.Int32);
+
+                var queryEventImages = "Select * from tblEventMedia Where event_id = @eventId";
+                using (var connection = _context.CreateConnection())
+                {
+                    var eventId = connection.QuerySingle<long>(queryEvent, parameters);
+                    var eventImagesList = connection.Query<EventImages>(queryEventImages, new {eventId}).AsList();
+                    SaveEventImages(eventId, eventImagesList, eventImages, preloaded);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
             }
         }
     }

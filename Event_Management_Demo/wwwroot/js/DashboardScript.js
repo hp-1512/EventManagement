@@ -12,7 +12,6 @@
 function DashboardData() {
 
     $.ajax({
-
         url: "/Methods/EventsDataPieChart",
         method: "GET",
         success: function (result) {

@@ -12,5 +12,6 @@ namespace Event_Management.Repository.Interface
         public EventsStatusData EventsDataForPieChart();
         public UserStatusData UsersDataForPieChart();
         public List<AnnualEventsData> AnnualEventsData();
+        public User GetThisUser(string email);
     }
 }

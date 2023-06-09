@@ -5,156 +5,87 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*<link rel="stylesheet" href="~/css/AdminAddEditMission.css">*@
+<link rel="stylesheet" href="~/css/ImageUploder.css">
 
 <div class="container-fluid p-0">
     <div class="border-bottom add-edit-heading">
-        <h5 class="heading">Add Mission</h5>
+        <h5 class="heading">Create Event</h5>
     </div>
-    <div class="form">
-        <form class="needs-validation" asp-controller="Home" asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+    <div id="form">
+        <form asp-controller="Home" asp-action="CreateEvent" method="post" enctype="multipart/form-data" >
             <div class="form-content">
                 <div class="form-group">
-                    <label class="form-label" for="eventTitle">Event Title</label>
+                    <label class="form-label" asp-for="EventTitle">Event Title</label>
                     <input asp-for="EventTitle" type="text" class="form-control" id="eventTitle"
                            placeholder="Enter event title">
                     <span class="text-danger" asp-validation-for="EventTitle"></span>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="eventDesc">Event Description</label>
+                    <label class="form-label" asp-for="EventDesc">Event Description</label>
                     <textarea asp-for="EventDesc" rows="3" class="form-control" id="eventDesc"
                               placeholder="Enter event description"></textarea>
                     <span class="text-danger" asp-validation-for="EventDesc"></span>
                 </div>
                 <div class="form-group">
-                    <label class="mb-1" for="note">Note</label>
-                    <textarea asp-for="Note" class="w-100 hidden-by-tinymce" style="min-height: 300px" id="note"></textarea>
+                    <label class="mb-1" asp-for="Note">Note</label>
+                    <textarea asp-for="Note" class="w-100" style="min-height: 300px" id="note"></textarea>
                 </div>
                 <div class="form-group">
-                    <label class="form-label" for="eventVanue">Event Vanue</label>
+                    <label class="form-label" asp-for="Vanue">Event Vanue</label>
                     <input asp-for="Vanue" type="text" class="form-control" id="eventVanue"
                            placeholder="Enter Event Vanue">
                     <span class="text-danger" asp-validation-for="Vanue"></span>
                 </div>
-@*                <div class="form-group">
-                    <label class="form-label" for="organizationDetail">Organization Detail</label>
-                    <textarea asp-for="OrganizationDetail" rows="3" class="form-control" id="organizationDetail"
-                              placeholder="Enter organization detail"></textarea>
-                    <span class="text-danger" asp-validation-for="OrganizationDetail"></span>
-                </div>*@
                 <div class="row my-3">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="mb-1" for="startDate">Select StartDate</label>
+                            <label class="mb-1" asp-for="StartDate">Select StartDate</label>
                             <input asp-for="StartDate" value="" type="date" class="form-control" id="startDate" min="@Convert.ToDateTime(@DateTime.Now).ToString("yyyy-MM-dd")" onchange="setEndDate()">
-                            <span asp-validation-for="StartDate" class="tex-danger"></span>
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label class="mb-1" for="endDate">Select EndDate</label>
-                            <input asp-for="EndDate" value="" type="date" class="form-control" id="endDate" onchange="getDeadline()">
+                            <label class="mb-1" asp-for="EndDate">Select EndDate</label>
+                            <input asp-for="EndDate" value="" type="date" class="form-control" id="endDate">
                             <span asp-validation-for="EndDate" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                            <label class="form-label" for="maxParticipants">Total Seats</label>
-                            <input asp-for="MaxParticipants" type="number" class="form-control" id="maxParticipants"
-                                   placeholder="Enter total seats">
-                            <span class="text-danger" asp-validation-for="MaxParticipants"></span>
-                        </div>
-               @* <div class="row">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="form-label" for="missionType">Mission Type</label>
-                            <select asp-for="MissionType" class="form-select select" id="missionType" onchange="timeGoalMission()">
-                                <option value="TIME">Time Based</option>
-                                <option value="GOAL">Goal Based</option>
-                            </select>
-                            <span class="text-danger" asp-validation-for="MissionType"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="form-label" for="missionTheme">Mission Theme</label>
-                            <select asp-for="MissionThemeId" class="form-select select" id="missionTheme">
-                                <option value="">Select Mission Theme</option>
-                                @foreach (var theme in Model.ThemeList)
-                                {
-                                    <option value="@theme.MissionThemeId">@theme.Title</option>
-                                }
-                            </select>
-                            <span asp-validation-for="MissionThemeId" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="forTimeBasedMiss">
-                    <div class="col-sm-6" >
-                        
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label  for="missionDeadline">Select Mission Deadline</label>
-                            <input asp-for="MissionDeadline" value="" type="date" class="form-control" id="missionDeadline">
-                            <span asp-validation-for="MissionDeadline" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" id="forGoalBasedMiss">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="form-label" for="totalGoal">Goal Value</label>
-                            <input asp-for="GoalValue" type="number" class="form-control" id="totalGoal"
-                                   placeholder="Enter total goal value" value="">
-                            <span class="text-danger" asp-validation-for="GoalValue"></span>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label class="form-label" for="totalSeats">Goal Objective</label>
-                            <input asp-for="GoalObjectiveText" type="text" class="form-control" id="totalSeats"
-                                   placeholder="Enter goal objective">
-                            <span class="text-danger" asp-validation-for="GoalObjectiveText"></span>
-                        </div>
-                    </div>
-                </div>*@
-                @*<div class="form-group">
-                    <label class="form-label" for="missAvailabilty">Mission Availability</label>
-                    <select asp-for="Availability" class="form-select select" id="missAvailabilty">
-                        <option value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
-                        <option value="week-end">Weekend</option>
-                        <option value="monthly">Monthly</option>
-                    </select>
-                    <span class="text-danger" asp-validation-for="Availability"></span>
-                </div>*@
-                @*<div class="form-group">
-                    <div class="label">
-                        <p class="mb-1">Upload Documents</p>
-                    </div>
-                    <div>
-                        <label class="preview-mission-docs d-block"></label>
-                    </div>
+                    <label class="form-label" asp-for="MaxParticipants">Allowed Participants</label>
+                    <input asp-for="MaxParticipants" type="number" class="form-control" id="maxParticipants"
+                           placeholder="Enter total seats" min=0>
+                    <span class="text-danger" asp-validation-for="MaxParticipants"></span>
                 </div>
                 <div class="form-group">
-                    <label class="mb-1" for="viedoUrl">Enter Viedo URL</label>
-                    <input asp-for="VideoUrl" type="text" class="form-control" id="videoUrl" placeholder="Enter Youtube Viedo URL...">
-                    <span asp-validation-for="VideoUrl" class="text-danger"></span>
-                </div>*@
+                    <label class="form-label" asp-for="CreatedBy">Created By</label>
+                    <input asp-for="CreatedBy" type="text" class="form-control" id="createdBy"
+                           hidden>
+                           <input type="text" class="form-control" id="createdByForDisplay" readonly>
+                    <span class="text-danger" asp-validation-for="CreatedBy"></span>
+                </div>
                 <div class="form-group">
                     <div class="label">
                         <p class="mb-1">Upload Images</p>
                     </div>
                     <div>
-                        <label class="preview-mission-image d-block"></label>
+                        <label class="preview-event-images d-block"></label>
                     </div>
                 </div>
             </div>
             <div class="d-flex justify-content-end align-items-center mt-3">
                 <a asp-controller="Home" asp-action="EventsPage" class="btn px-4 mb-5 cancel-btn rounded-pill me-4">Cancel</a>
-                <button class="btn px-4 mb-5 submit-btn rounded-pill" type="submit">Save</button>
+                <button class="btn btn-primary px-4 mb-5 submit-btn rounded-pill" type="submit">Save</button>
             </div>
         </form>
     </div>
 </div>
+<script src="~/js/CreateEvent.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".preview-event-images").imageUploader({});
+        loggedUser();
+    });
+
+</script>

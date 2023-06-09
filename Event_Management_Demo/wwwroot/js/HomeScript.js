@@ -6,3 +6,18 @@
         location.href = this.href;
     });
 });
+function gettingUserDetails() {
+    $.ajax({
+        url: "/Methods/LoggedUser",
+        method: "GET",
+        success: function (result) {
+            console.log(result);
+            document.getElementById('userName').textContent = result.userName;
+
+
+        },
+        error: function (error) {
+            console.log(error);
+        },
+    });
+}

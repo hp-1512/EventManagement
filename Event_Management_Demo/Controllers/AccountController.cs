@@ -2,9 +2,12 @@
 using Event_Management.Repository.Interface;
 using Event_Management_Demo.Models;
 using EventServices.Interface;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Event_Management_Demo.Controllers
 {
@@ -111,6 +114,20 @@ namespace Event_Management_Demo.Controllers
                 }
                 else
                 {
+                    var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.Email, ifActive.Email) },
+                    CookieAuthenticationDefaults.AuthenticationScheme);
+                    identity.AddClaim(new Claim(ClaimTypes.Name, ifActive.UserName));
+                    identity.AddClaim(new Claim(ClaimTypes.Email, ifActive.Email));
+                    //identity.AddClaim(new Claim(ClaimTypes.Role, status.Role));
+                    var principal = new ClaimsPrincipal(identity);
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = false,
+                    };
+
+
+                    await HttpContext.SignInAsync(principal, authProperties);
+                    HttpContext.Session.SetString("EmailId", ifActive.Email);
                     return RedirectToAction("Dashboard", "Home");
                 }
 
@@ -118,6 +135,21 @@ namespace Event_Management_Demo.Controllers
             TempData["error"] = "Invalid Credebtials!";
             return View(userLogin);
 
+        }
+        #endregion
+
+        #region Logout
+        //---------------------for logout--------------------------//
+        public IActionResult Logout()
+        {
+            HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var storedCookies = Request.Cookies.Keys;
+            foreach (var cookie in storedCookies)
+            {
+                Response.Cookies.Delete(cookie);
+            }
+            //HttpContext.Session.Clear();
+            return RedirectToAction("Login", "Account");
         }
         #endregion
 

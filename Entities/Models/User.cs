@@ -37,5 +37,6 @@ namespace Event_Management.Entities.Models
         public string UserName { get; set; }
         public int IsRegSuccess { get; set; }
         public int IsActive { get; set; }
+        public long UserId { get; set; }
     }
 }

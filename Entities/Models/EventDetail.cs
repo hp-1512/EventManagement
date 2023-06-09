@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,15 +22,5 @@ namespace Event_Management.Entities.Models
     {
         public IEnumerable<Event>? ListOfEvents { get; set; }
     }
-    public class EventCreation
-    {
-        public string? EventTitle { get; set; }
-        public string? EventDesc { get; set; }
-        public string? Note { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public string? Vanue { get; set; }
-        public string? CreatedBy { get; set; }
-        public int? MaxParticipants { get; set; }
-    }
+   
 }
