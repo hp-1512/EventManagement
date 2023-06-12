@@ -40,7 +40,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="mb-1" asp-for="StartDate">Select StartDate</label>
-                            <input asp-for="StartDate" value="" type="date" class="form-control" id="startDate" min="@Convert.ToDateTime(@DateTime.Now).ToString("yyyy-MM-dd")" onchange="setEndDate()">
+                            <input asp-for="StartDate" value="" type="date" class="form-control" id="startDate" min="@Convert.ToDateTime(@DateTime.Now.AddDays(1)).ToString("yyyy-MM-dd")" onchange="setEndDate()">
                             <span asp-validation-for="StartDate" class="text-danger"></span>
                         </div>
                     </div>

@@ -8,6 +8,6 @@ namespace EventServices.Interface
 {
     public interface IEmailHelper
     {
-         bool SendEmail(string userEmail, string message);
+         bool SendEmail(string userEmail, string subject, string message);
     }
 }

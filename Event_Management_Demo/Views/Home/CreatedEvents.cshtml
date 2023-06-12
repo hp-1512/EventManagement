@@ -1,6 +1,5 @@
 ﻿@{
     var systemdate = DateTime.Now.Date;
-
     ViewData["Title"] = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -10,10 +9,6 @@
 <div class="container grid-container">
     <div class="row my-4 justify-content-between">
         <h3 class=" col-md-8">@Model.ListOfEvents.Count() Events</h3>
-        <div class="col-4">
-
-            <a class="btn btn-primary" asp-action="CreateEvent" asp-controller="Home">Create Event</a>
-        </div>
     </div>
     <div class="row justify-content-center ">
         @foreach (var item in Model.ListOfEvents)
@@ -100,57 +95,20 @@
                                 }
 
                             </div>
-                            @*<div class="d-flex flex-wrap justify-content-around align-items-center px-4 py-3">
-                                <div class="d-flex align-items-center">
-                                <img class="me-2" height="20" src="/CI Platform Assets/Seats-left.png" alt="">
-                                <div>
-                                <p class="mb-0">@item.Seats</p>
-                                <small>Seats Left</small>
-                                </div>
-                                </div>
-                                <div class="d-flex align-items-center">
-                                <img class="me-2" height="25" src="/CI Platform Assets/deadline.png" alt="">
-                                <div>
 
-                                <p class="mb-0">@item.StartDate.Value.AddDays(-1).ToShortDateString()</p>
-                                <small>Deadline</small>
-                                </div>
-                                </div>
-                                </div>*@
                         </div>
 
 
 
                         <div>
-                            @if(item.ParticipatedUser != null  && @item.EndDate.Date >= @systemdate)
-                            {
-                               <a 
-                           class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
-                                    Participated
-                                </a> 
-                            }
-                            else if (item.MaxPrticipant != 0 && @item.EndDate.Date >= @systemdate)
-                            {
-                                <a asp-controller="Home" asp-action="Participate"
-                           class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
-                                    Participate
-                                    <span class="ps-2">⟶</span>
-                                </a>
-                            }
-                            else if(@item.EndDate.Date < @systemdate)
-                            {
-                                <a  
-                           class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn"  >
-                                    Closed
-                                </a>
-                            }
-                            else
-                            {
-                                <a  
-                           class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn"  >
-                                    Seats occupied
-                                </a>
-                            }
+
+                            <a asp-controller="Home" asp-action="Update" class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
+                                    Update
+                            </a>
+                            <a class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" onclick="deleteEvent(@item.EventId)">
+                                    Delete
+                            </a>
+                            
                         </div>
                     </div>
                 </div>
@@ -158,3 +116,5 @@
         }
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" asp-append-version="true"></script>
+<script src="~/js/CreatedEventsPage.js" asp-append-version="true"></script>

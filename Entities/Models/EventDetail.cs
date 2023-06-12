@@ -17,6 +17,8 @@ namespace Event_Management.Entities.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string? EventDesc { get; set; }
+        public int? MaxPrticipant { get; set; }
+        public long? ParticipatedUser { get; set; }
     }
     public class EventsDetailList
     {

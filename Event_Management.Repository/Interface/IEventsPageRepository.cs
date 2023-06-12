@@ -10,7 +10,10 @@ namespace Event_Management.Repository.Interface
 {
     public interface IEventsPageRepository
     {
-        public List<Event> EventsDataList();
+        public List<Event>? EventsDataList(long userId);
         public bool CreateEventDb(EventCreation eventObj, List<IFormFile> eventImages, string[] preloaded);
+        public Event? Participate(long userId, long eventId);
+        public List<Event>? ParticipatedEventsList(long userId);
+        public List<Event>? CreatedEventsList(long userId);
     }
 }

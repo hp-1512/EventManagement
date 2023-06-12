@@ -73,10 +73,11 @@ namespace Event_Management_Demo.Controllers
                 var tokenStore = _acc.StoreToken(appUser);
 
                 //Mail Sending Operarion
+                var subject = "Confirm Your Email";
                 var decodedverificationLink = Url.Action("ConfirmEmail", "Email", new { email = userModel.Email, token }, Request.Scheme);
                 var verificationLink = Url.ActionLink(System.Net.WebUtility.UrlEncode(decodedverificationLink));
                 var message = $"Please click on the following link to verify your email:<a href = '{decodedverificationLink}'>{verificationLink}</a>";
-                bool emailResponse = _emailHelper.SendEmail(userModel.Email, message);
+                bool emailResponse = _emailHelper.SendEmail(userModel.Email, subject, message);
 
                 if (emailResponse)
                 {
@@ -148,7 +149,7 @@ namespace Event_Management_Demo.Controllers
             {
                 Response.Cookies.Delete(cookie);
             }
-            //HttpContext.Session.Clear();
+            HttpContext.Session.Clear();
             return RedirectToAction("Login", "Account");
         }
         #endregion

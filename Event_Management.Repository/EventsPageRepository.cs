@@ -20,18 +20,19 @@ namespace Event_Management.Repository
         {
             _context = dapperContext;
         }
-        public List<Event> EventsDataList()
+        public List<Event>? EventsDataList(long userId)
         {
-            var query = "SELECT e.event_id AS EventId,title AS EventTitle,[path] AS EventImage,first_name +' '+ last_name AS Creator,vanue AS Vanue, start_date AS StartDate, end_date AS EndDate,description AS EventDesc " +
+            var query = "SELECT e.event_id AS EventId,p.user_id as ParticipatedUser,title AS EventTitle,[path] AS EventImage,first_name +' '+ last_name AS Creator,vanue AS Vanue, start_date AS StartDate, end_date AS EndDate,description AS EventDesc,max_participant AS MaxPrticipant " +
                 "FROM tblEvent e " +
                 "JOIN tblUser u ON e.created_by = u.user_id " +
-                "LEFT JOIN(select * from(SELECT *, ROW_NUMBER() over(partition by  event_id order by event_id) as row_num  FROM tblEventMedia r) temp Where row_num = 1) as em on e.event_id = em.event_id";
+                "LEFT JOIN(select * from(SELECT *, ROW_NUMBER() OVER(partition by  event_id order by event_id) AS row_num  FROM tblEventMedia r) temp WHERE row_num = 1) AS em ON e.event_id = em.event_id " +
+                "LEFT JOIN tblParticipatedEvents AS p ON p.event_id = e.event_id AND p.user_id =@userId " +
+                "WHERE e.deleted_at IS NULL";
             using (var connection = _context.CreateConnection())
             {
                 try
                 {
-
-                    var result = connection.Query<Event>(query).AsList();
+                    var result = connection.Query<Event>(query, new {userId = userId}).AsList();
                     return result;
                 }
                 catch (Exception ex)
@@ -41,10 +42,41 @@ namespace Event_Management.Repository
                 }
             }
         }
+        
+        public Event? Participate(long userId, long eventId)
+        {
+            try
+            {
+                var ifParticipated = "SELECT event_id FROM tblParticipatedEvents WHERE user_id = @userId AND event_id = @eventId";
+
+                var query = "INSERT INTO tblParticipatedEvents(user_id,status,event_id) VALUES(@userId,1,@eventId);" +
+                    "UPDATE tblEvent SET max_participant = max_participant - 1 WHERE event_id = @eventId;" +
+                    "SELECT title AS EventTitle, start_date AS StartDate,end_date AS EndDate FROM tblEvent WHERE event_id = @eventId";
+                var parameters = new DynamicParameters();
+                parameters.Add("@userId", userId, DbType.Int64);
+                parameters.Add("@eventId", eventId, DbType.Int64);
+                using (var connection = _context.CreateConnection())
+                {
+                    var ifParticipatedResult = connection.Query(ifParticipated, parameters);
+                    if (!ifParticipatedResult.Any())
+                    {
+                        var eventObj = connection.QuerySingle<Event>(query, parameters);
+                        return eventObj;
+                    }
+                }
+                return null;
+            }
+            catch (Exception)
+            {
+                //return null;
+                throw;
+
+            }
+        }
 
         public void DeleteImage(long eventId)
         {
-            var deleteImage = "DELETE * from  tblEventMedia where event_id = @eventId";
+            var deleteImage = "DELETE * FROM  tblEventMedia WHERE event_id = @eventId";
             using (var connection = _context.CreateConnection())
             {
                 var user = connection.Execute(deleteImage, new { eventId });
@@ -108,14 +140,14 @@ namespace Event_Management.Repository
                             image.CopyTo(stream);
                         }
                         // logic to save image in db
-                    var queryEventMedia = "INSERT INTO tblEventMedia([event_id],[path]) VALUES (@eventId,@path)";
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@eventId", eventId, DbType.Int64);
-                    parameters.Add("@path", imageName, DbType.String);
-                    using (var connection = _context.CreateConnection())
-                    {
-                        var imageInsert = connection.Execute(queryEventMedia,parameters);
-                    }
+                        var queryEventMedia = "INSERT INTO tblEventMedia([event_id],[path]) VALUES (@eventId,@path)";
+                        var parameters = new DynamicParameters();
+                        parameters.Add("@eventId", eventId, DbType.Int64);
+                        parameters.Add("@path", imageName, DbType.String);
+                        using (var connection = _context.CreateConnection())
+                        {
+                            var imageInsert = connection.Execute(queryEventMedia, parameters);
+                        }
                     }
                 }
             }
@@ -142,7 +174,7 @@ namespace Event_Management.Repository
                 using (var connection = _context.CreateConnection())
                 {
                     var eventId = connection.QuerySingle<long>(queryEvent, parameters);
-                    var eventImagesList = connection.Query<EventImages>(queryEventImages, new {eventId}).AsList();
+                    var eventImagesList = connection.Query<EventImages>(queryEventImages, new { eventId }).AsList();
                     SaveEventImages(eventId, eventImagesList, eventImages, preloaded);
                 }
                 return true;
@@ -150,6 +182,50 @@ namespace Event_Management.Repository
             catch (Exception ex)
             {
                 return false;
+            }
+        }
+
+        public List<Event>? ParticipatedEventsList(long userId)
+        {
+            var query = "SELECT e.event_id AS EventId,p.user_id as ParticipatedUser,title AS EventTitle,[path] AS EventImage,first_name +' '+ last_name AS Creator,vanue AS Vanue, start_date AS StartDate, end_date AS EndDate,description AS EventDesc,max_participant AS MaxPrticipant " +
+                "FROM tblEvent e " +
+                "JOIN tblUser u ON e.created_by = u.user_id " +
+                "LEFT JOIN(select * from(SELECT *, ROW_NUMBER() OVER(partition by  event_id order by event_id) AS row_num  FROM tblEventMedia r) temp WHERE row_num = 1) AS em ON e.event_id = em.event_id " +
+                "JOIN tblParticipatedEvents AS p ON p.event_id = e.event_id AND p.user_id =@userId " +
+                "WHERE e.deleted_at IS NULL";
+            using (var connection = _context.CreateConnection())
+            {
+                try
+                {
+                    var result = connection.Query<Event>(query, new { userId = userId }).AsList();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
+            }
+        }
+        public List<Event>? CreatedEventsList(long userId)
+        {
+            var query = "SELECT e.event_id AS EventId,u.user_id as ParticipatedUser,title AS EventTitle,[path] AS EventImage,first_name +' '+ last_name AS Creator,vanue AS Vanue, start_date AS StartDate, end_date AS EndDate,description AS EventDesc,max_participant AS MaxPrticipant " +
+                "FROM tblEvent e " +
+                "JOIN tblUser u ON e.created_by = u.user_id AND u.user_id = @userId " +
+                "LEFT JOIN(select * from(SELECT *, ROW_NUMBER() OVER(partition by  event_id order by event_id) AS row_num  FROM tblEventMedia r) temp WHERE row_num = 1) AS em ON e.event_id = em.event_id " +
+                "WHERE e.deleted_at IS NULL";
+            using (var connection = _context.CreateConnection())
+            {
+                try
+                {
+                    var result = connection.Query<Event>(query, new { userId }).AsList();
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
             }
         }
     }

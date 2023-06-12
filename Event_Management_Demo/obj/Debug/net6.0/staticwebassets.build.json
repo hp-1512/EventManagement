@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "kvicPEuk7sVvm8p5tNXmyF1Zf8Z5+2YZdmNXRiMgBnE=",
+  "Hash": "ClaXq/4QODO4ZAns8ErIdjSJKCz1beTe8Zs+LTPQeEw=",
   "Source": "Event_Management_Demo",
   "BasePath": "_content/Event_Management_Demo",
   "Mode": "Default",
@@ -102,6 +102,23 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
+      "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\08d71d74-66f6-4183-b645-7def34625011.png",
+      "SourceId": "Event_Management_Demo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\",
+      "BasePath": "_content/Event_Management_Demo",
+      "RelativePath": "EventMedia/08d71d74-66f6-4183-b645-7def34625011.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\EventMedia\\08d71d74-66f6-4183-b645-7def34625011.png"
+    },
+    {
       "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\20b306b7-5c74-4713-85bf-59d7e70bf4db.png",
       "SourceId": "Event_Management_Demo",
       "SourceType": "Discovered",
@@ -136,6 +153,40 @@
       "OriginalItemSpec": "wwwroot\\EventMedia\\5c3d1bde-86c3-4449-bc74-2d250306ee22.png"
     },
     {
+      "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\6805c168-b599-4090-8cf8-08e175a1e274.png",
+      "SourceId": "Event_Management_Demo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\",
+      "BasePath": "_content/Event_Management_Demo",
+      "RelativePath": "EventMedia/6805c168-b599-4090-8cf8-08e175a1e274.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\EventMedia\\6805c168-b599-4090-8cf8-08e175a1e274.png"
+    },
+    {
+      "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\88249f75-2292-41ad-9f15-f3abcffe1a5d.png",
+      "SourceId": "Event_Management_Demo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\",
+      "BasePath": "_content/Event_Management_Demo",
+      "RelativePath": "EventMedia/88249f75-2292-41ad-9f15-f3abcffe1a5d.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\EventMedia\\88249f75-2292-41ad-9f15-f3abcffe1a5d.png"
+    },
+    {
       "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\b3bdd261-67d0-46ee-9b41-0160630583f5.png",
       "SourceId": "Event_Management_Demo",
       "SourceType": "Discovered",
@@ -151,6 +202,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\EventMedia\\b3bdd261-67d0-46ee-9b41-0160630583f5.png"
+    },
+    {
+      "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\c60a8b3a-b3ba-4f86-b3d5-46a05ab3cfae.png",
+      "SourceId": "Event_Management_Demo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\",
+      "BasePath": "_content/Event_Management_Demo",
+      "RelativePath": "EventMedia/c60a8b3a-b3ba-4f86-b3d5-46a05ab3cfae.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\EventMedia\\c60a8b3a-b3ba-4f86-b3d5-46a05ab3cfae.png"
     },
     {
       "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\EventMedia\\e3840791-8b90-4b5b-b47f-1e529bd3267a.png",
@@ -474,6 +542,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Images\\Poster3.jpg"
+    },
+    {
+      "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\js\\CreatedEventsPage.js",
+      "SourceId": "Event_Management_Demo",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\",
+      "BasePath": "_content/Event_Management_Demo",
+      "RelativePath": "js/CreatedEventsPage.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\CreatedEventsPage.js"
     },
     {
       "Identity": "D:\\HP\\ci-project-main\\ci-project-main\\MVC\\Event_Management_Demo\\Event_Management_Demo\\wwwroot\\js\\CreateEvent.js",
