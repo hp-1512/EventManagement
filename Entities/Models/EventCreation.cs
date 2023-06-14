@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,9 @@ namespace Event_Management.Entities.Models
     {
         [Required(ErrorMessage = "Event Title is Required")]
         public string? EventTitle { get; set; }
-        [Required]
+        
+        [Required(ErrorMessage = "Event Description is Required")]
+        [Remote("IfValidDesc", "Methods", AdditionalFields = "eventDesc", ErrorMessage = "Event Description must be of 20 characters excluding space.")]
         public string? EventDesc { get; set; }
         public string? Note { get; set; }
         [Required]
@@ -29,5 +32,15 @@ namespace Event_Management.Entities.Models
     {
         public long EventId { get; set; }
         public string? Path { get; set; }
+    }
+    public class UpdateDeleteEventClass
+    {
+        public string? Email { get; set; }
+        public string? EventTitle { get; set; }
+        public string? EventDesc { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string? Vanue { get; set; }
+
     }
 }

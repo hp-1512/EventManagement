@@ -30,17 +30,15 @@
                 if (text.isConfirmed) {
                     $.ajax({
                         url: "/Home/DeleteEvent",
-                        method: "GET",
+                        method: "POST",
                         data: {
                             'eventId': eventId,
                             'resasonToDelete': text.value,
                         },
-                        success: function (result) {
-                            console.log(result);
-                            document.getElementById('createdBy').value = result.userId;
-                            document.getElementById('createdByForDisplay').value = result.userName;
-
-
+                        success: function () {
+                            
+                                location.reload();
+                            
                         },
                         error: function (error) {
                             console.log(error);

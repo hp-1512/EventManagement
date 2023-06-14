@@ -20,9 +20,9 @@ namespace Event_Management.Repository
         }
         public EventsStatusData EventsDataForPieChart()
         {
-            var query = "SELECT COUNT(event_id) AS CompletedEvents FROM tblEvent WHERE CONVERT(DATE, end_date) < CONVERT(DATE, GETDATE()); " +
-                "SELECT COUNT(event_id) AS OngoingEvents FROM tblEvent WHERE CONVERT(DATE, start_date) <= CONVERT(DATE, GETDATE()) AND CONVERT(DATE, end_date) >= CONVERT(DATE, GETDATE()); " +
-                "SELECT COUNT(event_id) AS UpcomingEvents FROM tblEvent WHERE CONVERT(DATE, start_date) > CONVERT(DATE, GETDATE()) ";
+            var query = "SELECT COUNT(event_id) AS CompletedEvents FROM tblEvent WHERE CONVERT(DATE, end_date) < CONVERT(DATE, GETDATE()) AND deleted_at IS NULL;" +
+                "SELECT COUNT(event_id) AS OngoingEvents FROM tblEvent WHERE CONVERT(DATE, start_date) <= CONVERT(DATE, GETDATE()) AND CONVERT(DATE, end_date) >= CONVERT(DATE, GETDATE()) AND deleted_at IS NULL; " +
+                "SELECT COUNT(event_id) AS UpcomingEvents FROM tblEvent WHERE CONVERT(DATE, start_date) > CONVERT(DATE, GETDATE()) AND deleted_at IS NULL";
             using (var connection = _context.CreateConnection())
             {
 
@@ -59,7 +59,9 @@ namespace Event_Management.Repository
         }
         public List<AnnualEventsData> AnnualEventsData()
         {
-            var query = "SELECT DATEPART(MONTH,start_date) AS Month, COUNT(event_id) AS TotalEvents FROM tblEvent GROUP BY DATEPART(MONTH,start_date)";
+            var query = "SELECT DATEPART(MONTH,start_date) AS Month, COUNT(event_id) AS TotalEvents FROM tblEvent " +
+                "WHERE deleted_at IS NULL " +
+                "GROUP BY DATEPART(MONTH,start_date) ";
             using (var connection = _context.CreateConnection())
             {
 

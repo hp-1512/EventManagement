@@ -8,7 +8,18 @@
 
 <div class="container grid-container">
     <div class="row my-4 justify-content-between">
-        <h3 class=" col-md-8">@Model.ListOfEvents.Count() Events</h3>
+        @if (@Model.ListOfEvents.Any())
+        {
+            <h3 class=" col-md-8">
+                @Model.ListOfEvents.Count() Events
+            </h3>
+        }
+        else
+        {
+            <h3>
+                Nothing to show for Created Events
+            </h3>
+        }
     </div>
     <div class="row justify-content-center ">
         @foreach (var item in Model.ListOfEvents)
@@ -97,18 +108,13 @@
                             </div>
 
                         </div>
-
-
-
                         <div>
-
-                            <a asp-controller="Home" asp-action="Update" class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
-                                    Update
+                            <a asp-controller="Home" asp-action="UpdateEvent" class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
+                                Update
                             </a>
                             <a class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" onclick="deleteEvent(@item.EventId)">
-                                    Delete
+                                Delete
                             </a>
-                            
                         </div>
                     </div>
                 </div>

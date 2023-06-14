@@ -74,12 +74,18 @@ namespace Event_Management.Repository
             }
         }
 
-        public void DeleteImage(long eventId)
+        public void DeleteImage(EventImages missionMedia)
         {
-            var deleteImage = "DELETE * FROM  tblEventMedia WHERE event_id = @eventId";
+            string missImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", missionMedia.Path);
+
+            if (System.IO.File.Exists(missImagePath))
+            {
+                System.IO.File.Delete(missImagePath);
+            }
+            var deleteImage = "DELETE FROM  tblEventMedia WHERE path = @path";
             using (var connection = _context.CreateConnection())
             {
-                var user = connection.Execute(deleteImage, new { eventId });
+                var user = connection.Execute(deleteImage, new { path = missionMedia.Path});
             }
         }
         public void SaveEventImages(long eventId, List<EventImages> eventImagesList, List<IFormFile> missionImageFiles, string[] preloadedmissimage)
@@ -89,14 +95,7 @@ namespace Event_Management.Repository
 
                 if (preloadedmissimage.Length < 1)
                 {
-                    string missImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", missionMedia.Path);
-
-                    if (System.IO.File.Exists(missImagePath))
-                    {
-                        System.IO.File.Delete(missImagePath);
-                    }
-
-                    DeleteImage(eventId);
+                    DeleteImage(missionMedia);
                 }
                 else
                 {
@@ -112,15 +111,7 @@ namespace Event_Management.Repository
                     }
                     if (!flag)
                     {
-                        string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", missionMedia.Path);
-
-                        if (System.IO.File.Exists(imagePath))
-                        {
-                            System.IO.File.Delete(imagePath);
-                        }
-                        DeleteImage(eventId);
-
-
+                        DeleteImage(missionMedia);
                     }
                 }
 
@@ -179,7 +170,7 @@ namespace Event_Management.Repository
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -226,6 +217,85 @@ namespace Event_Management.Repository
                     Console.WriteLine(ex);
                     return null;
                 }
+            }
+        }
+
+        public EventUpdation GetEventForUpdate(long eventId)
+        {
+            var query = "SELECT title AS EventTitle,description AS EventDesc, note AS Note, vanue AS Vanue,start_date AS StartDate,end_date AS EndDate, username AS CreatedBy, max_participant AS MaxParticipants   FROM tblEvent AS event " +
+                "JOIN tblUser AS usertbl ON event.created_by = usertbl.user_id  AND event_id = @eventId;" +
+                "SELECT * FROM tblEventMedia WHERE event_id =  @eventId;";
+            using(var connection = _context.CreateConnection())
+            {
+                var eventToBeUpdated =  connection.QueryMultiple(query, new { eventId });
+                var eventData = eventToBeUpdated.ReadFirst<EventUpdation>();
+                var eventMedia = eventToBeUpdated.Read<EventImages>().AsList();
+
+                eventData.EventMedia = eventMedia;
+
+                return eventData;
+            }
+        }
+        public List<UpdateDeleteEventClass> UpdateEvent(EventUpdation eventToBeUpdate, List<IFormFile> eventImages, string[] preloaded)
+        {
+            try
+            {
+                var queryEvent = "UPDATE tblEvent SET " +
+                    "[title] = @eventTitle, [description] = @eventDesc,[note] = @note,[start_date] = @startDate,[end_date] = @endDate, " +
+                    "[vanue] = @vanue,[max_participant] = @maxParticipant " +
+                    "WHERE event_id = @eventId;" +
+                    "SELECT * FROM tblEventMedia WHERE event_id = @eventId;" +
+                    "SELECT email AS Email,title AS EventTitle,description AS EventDesc,start_date AS StartDate,end_date AS EndDate,vanue AS Vanue FROM tblParticipatedEvents AS p JOIN tblUser AS u ON p.user_id = u.user_id AND event_id = @eventId " +
+                    "JOIN tblEvent as e On p.event_id = e.event_id";
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@eventTitle", eventToBeUpdate.EventTitle, DbType.String);
+                parameters.Add("@eventDesc", eventToBeUpdate.EventDesc, DbType.String);
+                parameters.Add("@note", eventToBeUpdate.Note, DbType.String);
+                parameters.Add("@startDate", eventToBeUpdate.StartDate, DbType.DateTime);
+                parameters.Add("@endDate", eventToBeUpdate.EndDate, DbType.DateTime);
+                parameters.Add("@vanue", eventToBeUpdate.Vanue, DbType.String);
+                parameters.Add("@maxParticipant", eventToBeUpdate.MaxParticipants, DbType.Int32);
+                parameters.Add("@eventId", eventToBeUpdate.EventId, DbType.Int64);
+
+                using (var connection = _context.CreateConnection())
+                {
+                    var result = connection.QueryMultiple(queryEvent, parameters);
+                    var eventImagesList = result.Read<EventImages>().AsList();
+                    var eventMailingData = result.Read<UpdateDeleteEventClass>().AsList();
+                    SaveEventImages(eventToBeUpdate.EventId, eventImagesList, eventImages, preloaded);
+                return eventMailingData;
+                }
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public List<UpdateDeleteEventClass> DeleteEvent(long eventId, string resasonToDelete)
+        {
+            var query = "UPDATE tblEvent SET deleted_at = GETDATE() WHERE event_id = @eventId;" +
+                "SELECT email AS Email, title AS EventTitle FROM tblParticipatedEvents AS p " +
+                "JOIN tblEvent AS e ON p.event_id = e.event_id AND e.event_id = @eventId " +
+                "JOIN tblUser AS u ON u.user_id = p.user_id ;" +
+                "SELECT * FROM tblEventMedia WHERE event_id = @eventId ;" +
+                "DELETE FROM  tblEventMedia WHERE event_id = @eventId ;";
+            using (var connection = _context.CreateConnection())
+            {
+                var result = connection.QueryMultiple(query, new { eventId });
+                var participatedUsers = result.Read<UpdateDeleteEventClass>().AsList();
+                var eventImages = result.Read<EventImages>().AsList();
+                foreach(var image in eventImages)
+                {
+                    string eventImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", image.Path);
+
+                    if (System.IO.File.Exists(eventImagePath))
+                    {
+                        System.IO.File.Delete(eventImagePath);
+                    }
+                }
+                return participatedUsers;
+                
             }
         }
     }

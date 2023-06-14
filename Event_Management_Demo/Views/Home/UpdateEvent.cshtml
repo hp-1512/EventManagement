@@ -3,7 +3,7 @@
     ViewData["Title"] = "Create Event";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model Event_Management.Entities.Models.EventCreation;
+@model Event_Management.Entities.Models.EventUpdation;
 
 <link rel="stylesheet" href="~/css/ImageUploder.css">
 
@@ -12,9 +12,10 @@
         <h5 class="heading">Create Event</h5>
     </div>
     <div id="form">
-        <form asp-controller="Home" asp-action="CreateEvent" method="post" enctype="multipart/form-data">
+        <form asp-controller="Home" asp-action="UpdateEvent" method="post" enctype="multipart/form-data">
             <div class="form-content">
                 <div class="form-group">
+                    <input hidden asp-for="EventId" />
                     <label class="form-label" asp-for="EventTitle">Event Title</label>
                     <input asp-for="EventTitle" type="text" class="form-control" id="eventTitle"
                            placeholder="Enter event title">
@@ -46,14 +47,14 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="mb-1" asp-for="StartDate">Select StartDate</label>
-                            <input asp-for="StartDate" value="" type="date" class="form-control" id="startDate" min="@Convert.ToDateTime(@DateTime.Now.AddDays(1)).ToString("yyyy-MM-dd")" onchange="setEndDate()">
+                            <input asp-for="StartDate"  type="date" class="form-control" id="startDate"  onchange="setEndDate()">
                             <span asp-validation-for="StartDate" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="mb-1" asp-for="EndDate">Select EndDate</label>
-                            <input asp-for="EndDate" value="" type="date" class="form-control" id="endDate">
+                            <input asp-for="EndDate" type="date" class="form-control" id="endDate">
                             <span asp-validation-for="EndDate" class="text-danger"></span>
                         </div>
                     </div>
@@ -70,6 +71,12 @@
                            hidden>
                     <input type="text" class="form-control" id="createdByForDisplay" readonly>
                     <span class="text-danger" asp-validation-for="CreatedBy"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" asp-for="ReasonToUpdate">Event Updation Reason</label>
+                    <textarea asp-for="ReasonToUpdate" rows="3" class="form-control" id="eventDesc"
+                              placeholder="Enter reason for Event Updation"></textarea>
+                    <span class="text-danger" asp-validation-for="ReasonToUpdate"></span>
                 </div>
                 <div class="form-group">
                     <div class="label">
@@ -96,8 +103,36 @@
 <script src="~/js/CreateEvent.js"></script>
 <script>
     $(document).ready(function(){
-        $(".preview-event-images").imageUploader({});
         loggedUser();
     });
 
+</script>
+
+
+
+<script>
+     //for mission images
+    if (@Model.EventMedia.Count() == 0) {
+        $('.preview-event-images').html("");
+        $(".preview-event-images").imageUploader({});
+    }
+    else {
+        $('.preview-event-images').html("");
+        var i = 1;
+        let preloadedimages = [];
+        var media = @Html.Raw(Json.Serialize(@Model.EventMedia));
+        for (let j = 0; j < media.length; j++) {
+            
+                let imgPath = media[j].path;
+                var content = {
+                    id: i, src: "/EventMedia/" + imgPath
+                };
+                i++;
+                preloadedimages.push(content);
+            
+        }
+        $('.preview-event-images').imageUploader({
+            preloadedimage: preloadedimages
+        });
+    }
 </script>

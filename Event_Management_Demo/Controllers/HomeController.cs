@@ -16,6 +16,7 @@ namespace Event_Management_Demo.Controllers
             _eventsPage = EventsPage;
             _emailHelper = emailHelper;
         }
+
         public IActionResult Dashboard()
         {
             return View();
@@ -37,7 +38,7 @@ namespace Event_Management_Demo.Controllers
         {
             var user = LoggedUser();
             var userId = user.UserId;
-            var status = _eventsPage.Participate(userId,eventId);
+            var status = _eventsPage.Participate(userId, eventId);
             if (status != null)
             {
                 var subject = "Invitation For Event";
@@ -53,16 +54,18 @@ namespace Event_Management_Demo.Controllers
             return View("~/Views/Email/Error.cshtml");
         }
 
+       
         [HttpGet]
         public IActionResult CreateEvent()
         {
             return View();
         }
-        
+
         [HttpPost]
-        public IActionResult CreateEvent(EventCreation eventObj ,List<IFormFile> eventImagesList, string[] preloaded)
+        public IActionResult CreateEvent(EventCreation eventObj, List<IFormFile> eventImagesList, string[] preloaded)
         {
-            if (ModelState.IsValid)
+            
+            if (ModelState.IsValid && eventImagesList.Count()>0)
             {
                 _eventsPage.CreateEventDb(eventObj, eventImagesList, preloaded);
                 var user = LoggedUser();
@@ -78,30 +81,75 @@ namespace Event_Management_Demo.Controllers
                     return View("~/Views/Email/Error.cshtml");
                 }
             }
+            if(eventImagesList.Count() == 0)
+            {
+            TempData["error"] = "Please Select at least one image.";
+            }
             return View(eventObj);
         }
-        
+
         [HttpGet]
         public IActionResult CreatedEvents()
         {
+            var events =  CreatedEventsList();
+            return View(events);
+        }
+
+        public EventsDetailList CreatedEventsList()
+        {
             var user = LoggedUser();
-            
+
             var eventsList = _eventsPage.CreatedEventsList(user.UserId);
             EventsDetailList events = new()
             {
                 ListOfEvents = eventsList,
             };
-            return View(events);
+            return events;
         }
 
-        public bool DeleteEvent(long eventId,string resasonToDelete)
+
+        [HttpGet]
+        public IActionResult UpdateEvent(long eventId)
         {
-            //var isDeleted = _eventsPage.DeleteEvent(eventId, resasonToDelete);
-            return false;
+            var eventToBeUpdated = _eventsPage.GetEventForUpdate(eventId);
+            return View(eventToBeUpdated);
+        }
+        [HttpPost]
+        public IActionResult UpdateEvent(EventUpdation obj, List<IFormFile> eventImagesList, string[] preloaded)
+        {
+            var eventMailingData = _eventsPage.UpdateEvent(obj, eventImagesList, preloaded);
+            return RedirectToAction("CreatedEvents");
+        }
+        [HttpPost]
+        public IActionResult DeleteEvent(long eventId, string resasonToDelete)
+        {
+            var isDeleted = _eventsPage.DeleteEvent(eventId, resasonToDelete);
+            if (isDeleted.Any())
+            {
+                foreach (var participatedUser in isDeleted)
+                {
+                    var subject = $"Cancellation of Event - {participatedUser.EventTitle}";
+                    var message = $"I hope this email finds you well. I am writing to inform you that, unfortunately, we have made the difficult decision to cancel the <b>{participatedUser.EventTitle}</b> due to { resasonToDelete}. we apologize for any inconvenience caused and thank you for your understanding and continued support.<br>" ;
+                    bool emailResponse = _emailHelper.SendEmail(participatedUser.Email, subject, message);
+                    if (emailResponse)
+                    {
+                        return Json(true);
+                    }
+                }
+            }
+            return Json(false);
         }
 
         [HttpGet]
         public IActionResult ParticipatedEvents()
+        {
+            var events = ParticipatedEventsList();
+            
+            return View(events);
+        }
+
+
+        public EventsDetailList ParticipatedEventsList()
         {
             var user = LoggedUser();
             var userId = user.UserId;
@@ -110,7 +158,7 @@ namespace Event_Management_Demo.Controllers
             {
                 ListOfEvents = eventsList,
             };
-            return View(events);
+            return events;
         }
     }
 }

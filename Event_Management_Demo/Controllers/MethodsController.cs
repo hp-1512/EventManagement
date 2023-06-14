@@ -12,6 +12,7 @@ namespace Event_Management_Demo.Controllers
         {
             _dash = dashboardRepository;
         }
+        
         [HttpGet]
         public IActionResult EventsDataPieChart()
         {
@@ -38,5 +39,15 @@ namespace Event_Management_Demo.Controllers
             var user = _dash.GetThisUser(email);
             return user;
         }
+        public bool IfValidDesc(string eventDesc)
+        {
+            var ifValid = eventDesc.Replace(" ", "");
+            if (ifValid.Length >= 20)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

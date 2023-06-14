@@ -15,5 +15,8 @@ namespace Event_Management.Repository.Interface
         public Event? Participate(long userId, long eventId);
         public List<Event>? ParticipatedEventsList(long userId);
         public List<Event>? CreatedEventsList(long userId);
+        public List<UpdateDeleteEventClass> DeleteEvent(long eventId, string resasonToDelete);
+        public EventUpdation GetEventForUpdate(long eventId);
+        public List<UpdateDeleteEventClass> UpdateEvent(EventUpdation eventToBeUpdate, List<IFormFile> eventImages, string[] preloaded);
     }
 }
