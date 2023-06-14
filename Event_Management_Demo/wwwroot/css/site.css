@@ -36,3 +36,16 @@ html {
 .mission-img {
     object-fit: cover;
 }
+
+::-webkit-scrollbar {
+    height: 10px;
+    width: 0.45rem;
+}
+::-webkit-scrollbar-thumb {
+    background-color: rgba(27, 27, 27, 0.4);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}

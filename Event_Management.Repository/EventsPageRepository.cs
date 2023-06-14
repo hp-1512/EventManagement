@@ -147,8 +147,8 @@ namespace Event_Management.Repository
         {
             try
             {
-                var queryEvent = "INSERT INTO tblEvent([title],[description],[note],[start_date],[end_date],[vanue],[created_by],[max_participant])" +
-                        "VALUES(@eventTitle,@eventDesc,@note,@startDate,@endDate,@vanue,@createdBy,@maxParticipant)" +
+                var queryEvent = "INSERT INTO tblEvent([title],[description],[note],[start_date],[end_date],[start_time],[end_time],[vanue],[created_by],[max_participant])" +
+                        "VALUES(@eventTitle,@eventDesc,@note,@startDate,@endDate,@startTime,@endTime,@vanue,@createdBy,@maxParticipant)" +
                         "SELECT CAST(SCOPE_IDENTITY() as bigint)";
 
                 var parameters = new DynamicParameters();
@@ -157,9 +157,12 @@ namespace Event_Management.Repository
                 parameters.Add("@note", eventObj.Note, DbType.String);
                 parameters.Add("@startDate", eventObj.StartDate, DbType.DateTime);
                 parameters.Add("@endDate", eventObj.EndDate, DbType.DateTime);
+                parameters.Add("@startTime", eventObj.StartTime, DbType.Time);
+                parameters.Add("@endTime", eventObj.EndTime, DbType.Time);
                 parameters.Add("@vanue", eventObj.Vanue, DbType.String);
                 parameters.Add("@createdBy", eventObj.CreatedBy, DbType.Int64);
                 parameters.Add("@maxParticipant", eventObj.MaxParticipants, DbType.Int32);
+
 
                 var queryEventImages = "Select * from tblEventMedia Where event_id = @eventId";
                 using (var connection = _context.CreateConnection())
@@ -222,7 +225,7 @@ namespace Event_Management.Repository
 
         public EventUpdation GetEventForUpdate(long eventId)
         {
-            var query = "SELECT title AS EventTitle,description AS EventDesc, note AS Note, vanue AS Vanue,start_date AS StartDate,end_date AS EndDate, username AS CreatedBy, max_participant AS MaxParticipants   FROM tblEvent AS event " +
+            var query = "SELECT title AS EventTitle,description AS EventDesc, note AS Note, vanue AS Vanue,start_date AS StartDate,end_date AS EndDate, start_time AS StartTime,end_time AS EndTime, username AS CreatedBy, max_participant AS MaxParticipants   FROM tblEvent AS event " +
                 "JOIN tblUser AS usertbl ON event.created_by = usertbl.user_id  AND event_id = @eventId;" +
                 "SELECT * FROM tblEventMedia WHERE event_id =  @eventId;";
             using(var connection = _context.CreateConnection())
@@ -242,7 +245,7 @@ namespace Event_Management.Repository
             {
                 var queryEvent = "UPDATE tblEvent SET " +
                     "[title] = @eventTitle, [description] = @eventDesc,[note] = @note,[start_date] = @startDate,[end_date] = @endDate, " +
-                    "[vanue] = @vanue,[max_participant] = @maxParticipant " +
+                    "[start_time] = @startTime,[end_time] = @endTime ,[vanue] = @vanue,[max_participant] = @maxParticipant " +
                     "WHERE event_id = @eventId;" +
                     "SELECT * FROM tblEventMedia WHERE event_id = @eventId;" +
                     "SELECT email AS Email,title AS EventTitle,description AS EventDesc,start_date AS StartDate,end_date AS EndDate,vanue AS Vanue FROM tblParticipatedEvents AS p JOIN tblUser AS u ON p.user_id = u.user_id AND event_id = @eventId " +
@@ -254,6 +257,8 @@ namespace Event_Management.Repository
                 parameters.Add("@note", eventToBeUpdate.Note, DbType.String);
                 parameters.Add("@startDate", eventToBeUpdate.StartDate, DbType.DateTime);
                 parameters.Add("@endDate", eventToBeUpdate.EndDate, DbType.DateTime);
+                parameters.Add("@startTime", eventToBeUpdate.StartTime, DbType.Time);
+                parameters.Add("@endTime", eventToBeUpdate.EndTime, DbType.Time);
                 parameters.Add("@vanue", eventToBeUpdate.Vanue, DbType.String);
                 parameters.Add("@maxParticipant", eventToBeUpdate.MaxParticipants, DbType.Int32);
                 parameters.Add("@eventId", eventToBeUpdate.EventId, DbType.Int64);

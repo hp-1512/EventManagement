@@ -21,6 +21,8 @@ namespace Event_Management.Entities.Models
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
         [Required]
         public string? Vanue { get; set; }
         public string? CreatedBy { get; set; }

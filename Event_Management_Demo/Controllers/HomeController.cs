@@ -3,6 +3,7 @@ using Event_Management.Repository.Interface;
 using EventServices.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Event_Management_Demo.Controllers
 {
@@ -117,7 +118,31 @@ namespace Event_Management_Demo.Controllers
         [HttpPost]
         public IActionResult UpdateEvent(EventUpdation obj, List<IFormFile> eventImagesList, string[] preloaded)
         {
+            var oldDataOfEvent = _eventsPage.GetEventForUpdate(obj.EventId);
             var eventMailingData = _eventsPage.UpdateEvent(obj, eventImagesList, preloaded);
+            //string input = obj.StartTime.ToString();
+            //TimeSpan timeSpan;
+            //var x = TimeSpan.TryParseExact(input, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan);
+            //var z = timeSpan.ToString(@"hh\:mm\:ss tt");
+            //TimeSpan input = new TimeSpan(obj.StartTime.Hours, obj.StartTime.Minutes, obj.StartTime.Seconds);
+            //var y = (input).ToString(@"hh:mm:ss tt");
+            if (oldDataOfEvent.EventTitle != obj.EventTitle || oldDataOfEvent.StartDate != obj.StartDate || oldDataOfEvent.EndDate != obj.EndDate || oldDataOfEvent.StartTime!=obj.StartTime || oldDataOfEvent.EndTime != obj.EndTime || oldDataOfEvent.Vanue != obj.Vanue)
+            {
+                foreach(var participatedUser in eventMailingData)
+                {
+                    var subject = "Update Of the Event"; 
+                    var message = $"There was an update for Event - <b>{obj.EventTitle}</b> starting from <b>{obj.StartDate.ToShortDateString()}</b> {Convert.ToDateTime(obj.StartTime).ToString("hh:mm:ss tt")} to <b>{obj.EndDate.ToShortDateString()} {Convert.ToDateTime(obj.EndTime).ToString("hh:mm:ss tt")}</b>.";
+                    bool emailResponse = _emailHelper.SendEmail(participatedUser.Email, subject, message);
+                    if (emailResponse)
+                    {
+                        return RedirectToAction("CreatedEvents");
+                    }
+                    else
+                    {
+                        return View("~/Views/Email/Error.cshtml");
+                    }
+                }
+            }
             return RedirectToAction("CreatedEvents");
         }
         [HttpPost]

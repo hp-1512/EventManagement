@@ -201,6 +201,24 @@ function setEndDate() {
     var minEndDateStr = start.toISOString().slice(0, 10);
     $("#endDate").attr("min", minEndDateStr);
 }
+function setEndTime() {
+    var start = $("#startDate").val();
+    var end = $("#endDate").val();
+
+    var startTimeVal = $("#startTime").val();
+    if (start == end) {
+        let [hours, mins] = startTimeVal.split(':');
+        hours = parseInt(hours) + 1;
+        if (hours < 10) {
+            hours = hours.toString().padStart(2, '0');
+        };
+        let list = [hours, mins];
+        let newstart = list.join(':');
+        console.log(newstart);
+
+        $("#endTime").attr("min", newstart);
+    }
+}
 
 //For Created By
 function loggedUser() {

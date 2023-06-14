@@ -11,7 +11,7 @@ function gettingUserDetails() {
         url: "/Methods/LoggedUser",
         method: "GET",
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             document.getElementById('userName').textContent = result.userName;
 
 
@@ -26,7 +26,7 @@ function gettingParticipatedEvents() {
         url: "/Home/ParticipatedEventsList",
         method: "GET",
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             if (result.listOfEvents.length == 0) {
                 $('#participatedEventsLink').addClass('d-none');
             }
@@ -46,7 +46,7 @@ function gettingCreatedEvents() {
         url: "/Home/CreatedEventsList",
         method: "GET",
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             if (result.listOfEvents.length == 0) {
                 $('#createdEventsLink').addClass('d-none');
             }
