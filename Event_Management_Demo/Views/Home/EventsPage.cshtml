@@ -8,12 +8,11 @@
 
 
 <div class="container grid-container">
-    <div class="row my-4 justify-content-between">
-        <h3 class=" col-md-8">@Model.ListOfEvents.Count() Events</h3>
-        <div class="col-4">
+    <div class="d-flex my-4 justify-content-between">
+        <h3>@Model.ListOfEvents.Count() Events</h3>
 
-            <a class="btn btn-primary" asp-action="CreateEvent" asp-controller="Home">Create Event</a>
-        </div>
+        <a class="btn btn-primary" asp-action="CreateEvent" asp-controller="Home">Create Event</a>
+
     </div>
     <div class="row justify-content-center ">
         @foreach (var item in Model.ListOfEvents)
@@ -58,6 +57,12 @@
                          src="/Images/NoImg.jpg"
                          alt="Card image cap" style="z-index: 1;">
                         }
+                        <a class="bg-dark bg-opacity-50 border-0 btn" id="likeThisMission" asp-action="PdfDownload" asp-controller="Methods" asp-route-eventId="@item.EventId">
+                            <i class="bi bi-download text-white"></i>
+                        </a>
+                        <a class="bg-dark bg-opacity-50 border-0 btn" id="shareToFriend" onclick="shareEvent(@item.EventId)">
+                            <i class="bi bi-share-fill text-white"></i>
+                        </a>
 
                     </div>
                     <div class="card-body p-0">
@@ -122,12 +127,11 @@
 
 
                         <div>
-                            @if(item.ParticipatedUser != null  && @item.EndDate.Date >= @systemdate)
+                            @if (item.ParticipatedUser != null && @item.EndDate.Date >= @systemdate)
                             {
-                               <a 
-                           class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
+                                <a class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
                                     Participated
-                                </a> 
+                                </a>
                             }
                             else if (item.MaxPrticipant != 0 && @item.EndDate.Date >= @systemdate)
                             {
@@ -137,17 +141,15 @@
                                     <span class="ps-2">⟶</span>
                                 </a>
                             }
-                            else if(@item.EndDate.Date < @systemdate)
+                            else if (@item.EndDate.Date < @systemdate)
                             {
-                                <a  
-                           class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn"  >
+                                <a class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn">
                                     Closed
                                 </a>
                             }
                             else
                             {
-                                <a  
-                           class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn"  >
+                                <a class="btn btn-primary disabled d-flex align-items-center justify-content-center mx-3 my-2 participateBtn">
                                     Seats occupied
                                 </a>
                             }

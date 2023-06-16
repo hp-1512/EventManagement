@@ -1,6 +1,7 @@
 ﻿using Event_Management.Entities.Models;
 using Event_Management.Repository.Interface;
 using EventServices.Interface;
+using IronPdf.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
@@ -12,7 +13,7 @@ namespace Event_Management_Demo.Controllers
     {
         private readonly IEventsPageRepository _eventsPage;
         private readonly IEmailHelper _emailHelper;
-        public HomeController(IEventsPageRepository EventsPage, IEmailHelper emailHelper, IDashboardRepository dashboardRepository) : base(dashboardRepository)
+        public HomeController(IEventsPageRepository EventsPage, IEmailHelper emailHelper, IDashboardRepository dashboardRepository) : base(dashboardRepository,EventsPage)
         {
             _eventsPage = EventsPage;
             _emailHelper = emailHelper;
@@ -35,6 +36,7 @@ namespace Event_Management_Demo.Controllers
             return View(events);
         }
 
+        #region Participate in Event
         public IActionResult Participate(long eventId)
         {
             var user = LoggedUser();
@@ -54,8 +56,9 @@ namespace Event_Management_Demo.Controllers
             }
             return View("~/Views/Email/Error.cshtml");
         }
+        #endregion
 
-       
+        #region Create Event
         [HttpGet]
         public IActionResult CreateEvent()
         {
@@ -88,7 +91,9 @@ namespace Event_Management_Demo.Controllers
             }
             return View(eventObj);
         }
+        #endregion
 
+        #region Created Event Pages
         [HttpGet]
         public IActionResult CreatedEvents()
         {
@@ -107,8 +112,9 @@ namespace Event_Management_Demo.Controllers
             };
             return events;
         }
+        #endregion
 
-
+        #region Update - Delete Event
         [HttpGet]
         public IActionResult UpdateEvent(long eventId)
         {
@@ -120,18 +126,20 @@ namespace Event_Management_Demo.Controllers
         {
             var oldDataOfEvent = _eventsPage.GetEventForUpdate(obj.EventId);
             var eventMailingData = _eventsPage.UpdateEvent(obj, eventImagesList, preloaded);
-            //string input = obj.StartTime.ToString();
-            //TimeSpan timeSpan;
-            //var x = TimeSpan.TryParseExact(input, @"hh\:mm\:ss", CultureInfo.InvariantCulture, out timeSpan);
-            //var z = timeSpan.ToString(@"hh\:mm\:ss tt");
-            //TimeSpan input = new TimeSpan(obj.StartTime.Hours, obj.StartTime.Minutes, obj.StartTime.Seconds);
-            //var y = (input).ToString(@"hh:mm:ss tt");
+
+
+            TimeSpan startTimeSpan = obj.StartTime; // Retrieve the TimeSpan value from the database
+            TimeSpan endTimeSpan = obj.EndTime; // Retrieve the TimeSpan value from the database
+
+            string startTime = DateTime.Today.Add(startTimeSpan).ToString("hh:mm tt");
+            string endTime = DateTime.Today.Add(endTimeSpan).ToString("hh:mm tt");
+
             if (oldDataOfEvent.EventTitle != obj.EventTitle || oldDataOfEvent.StartDate != obj.StartDate || oldDataOfEvent.EndDate != obj.EndDate || oldDataOfEvent.StartTime!=obj.StartTime || oldDataOfEvent.EndTime != obj.EndTime || oldDataOfEvent.Vanue != obj.Vanue)
             {
                 foreach(var participatedUser in eventMailingData)
                 {
                     var subject = "Update Of the Event"; 
-                    var message = $"There was an update for Event - <b>{obj.EventTitle}</b> starting from <b>{obj.StartDate.ToShortDateString()}</b> {Convert.ToDateTime(obj.StartTime).ToString("hh:mm:ss tt")} to <b>{obj.EndDate.ToShortDateString()} {Convert.ToDateTime(obj.EndTime).ToString("hh:mm:ss tt")}</b>.";
+                    var message = $"There was an update for Event - <b>{obj.EventTitle}</b> starting from <b>{obj.StartDate.ToShortDateString()}</b>{startTime}  to <b>{obj.EndDate.ToShortDateString()} {endTime}</b>.";
                     bool emailResponse = _emailHelper.SendEmail(participatedUser.Email, subject, message);
                     if (emailResponse)
                     {
@@ -145,6 +153,8 @@ namespace Event_Management_Demo.Controllers
             }
             return RedirectToAction("CreatedEvents");
         }
+
+        #region Delete Event
         [HttpPost]
         public IActionResult DeleteEvent(long eventId, string resasonToDelete)
         {
@@ -164,6 +174,10 @@ namespace Event_Management_Demo.Controllers
             }
             return Json(false);
         }
+        #endregion
+        #endregion
+
+        #region Participated Events
 
         [HttpGet]
         public IActionResult ParticipatedEvents()
@@ -185,5 +199,8 @@ namespace Event_Management_Demo.Controllers
             };
             return events;
         }
+        #endregion
+
+
     }
 }

@@ -10,3 +10,15 @@ D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Deb
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\ref\Event_Management.Entities.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\Entities\obj\Debug\net6.0\Event_Management.Entities.pdb
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\bin\Debug\net6.0\Event_Management.Entities.deps.json
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\bin\Debug\net6.0\Event_Management.Entities.dll
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\bin\Debug\net6.0\Event_Management.Entities.pdb
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.csproj.AssemblyReference.cache
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.AssemblyInfoInputs.cache
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.AssemblyInfo.cs
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.dll
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\refint\Event_Management.Entities.dll
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\Event_Management.Entities.pdb
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\Entities\obj\Debug\net6.0\ref\Event_Management.Entities.dll

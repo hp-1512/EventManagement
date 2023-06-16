@@ -6,120 +6,63 @@
 @model Event_Management.Entities.Models.EventsDetailList
 
 
-<div class="container grid-container">
-    <div class="row my-4 justify-content-between">
-        @if (@Model.ListOfEvents.Any())
-        {
-            <h3 class=" col-md-8">
-                @Model.ListOfEvents.Count() Events
-            </h3>
-        }
-        else
-        {
-            <h3>
-                Nothing to show for Created Events
-            </h3>
-        }
-    </div>
+<div class="table-responsive">
+
+    <table class="table" >
+        <thead>
+            <tr>
+                <th scope="col">Event Title</th>
+                <th scope="col">Event Desc</th>
+                <th scope="col">Event Creator</th>
+                <th scope="col">From</th>
+                <th scope="col">To</th>
+                <th scope="col">Venue</th>
+                <th scope="col">Status</th>
+                <th scope="col" class="ps-4">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ListOfEvents)
+            {
+
+
+                <tr>
+                    <td> @item.EventTitle</td>
+                    <td class="eventDesc"  style="overflow: hidden;
+white-space: nowrap;
+text-overflow: ellipsis;max-width: 0;">@item.EventDesc</td>
+                    <td>@item.Creator</td>
+                    <td>@item.StartDate.ToShortDateString()</td>
+                    <td>@item.EndDate.ToShortDateString()</td>
+                    <td>@item.Vanue</td>
+                    @if (@item.StartDate.Date <= @systemdate && @item.EndDate.Date >= @systemdate)
+                    {
+                        <td>OnGoing</td>
+                    }
+                    else if (@item.EndDate.Date < @systemdate)
+                    {
+                        <td>Completed</td>
+                    }
+                    else if (@item.StartDate.Date > @systemdate)
+                    {
+                        <td>Upcoming</td>
+                    }
+
+                    <td  class="px-auto">
+                        <span class="d-flex">
+                            <a asp-controller="Home" asp-action="UpdateEvent" class="btn align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a class="btn align-items-center justify-content-center mx-3 my-2 participateBtn" onclick="deleteEvent(@item.EventId)">
+                                <i class="bi bi-trash-fill"></i>
+                            </a>
+                        </span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
     <div class="row justify-content-center ">
-        @foreach (var item in Model.ListOfEvents)
-        {
-            <div class="col-12 col-md-6 col-lg-4 mb-4 align-items-stretch">
-                <div class="card">
-                    <div id="img-part-card" style="position: relative; height:240px">
-
-                        @if (Model.ListOfEvents != null)
-                        {
-
-                            if (@item.StartDate.Date <= @systemdate && @item.EndDate.Date >= @systemdate)
-                            {
-                                <div class="d-flex position-absolute pt-2 badgeclass" style="z-index: 2;">
-                                    <span class="badge1 bg-success text-dark ms-1 py-2">OnGoing</span>
-                                </div>
-                            }
-                            else if (@item.EndDate.Date < @systemdate)
-                            {
-                                <div class="d-flex position-absolute pt-2 badgeclass" style="z-index: 2;">
-                                    <span class="badge1 bg-warning text-dark ms-1 py-2">Completed<i class="bi bi-patch-check text-white  px-2"></i></span>
-                                </div>
-                            }
-                            else if (@item.StartDate.Date > @systemdate)
-                            {
-                                <div class="d-flex position-absolute pt-2 badgeclass" style="z-index: 2;">
-                                    <span class="badge1 bg-info text-dark ms-1 py-2 ">Upcoming<i class="bi bi-patch-exclamation text-white px-2"></i></span>
-                                </div>
-                            }
-                        }
-
-                        @if (item.EventImage != null)
-                        {
-                            <img class="card-img-top h-100 mission-img"
-                         src="/EventMedia/@item.EventImage"
-                         alt="Card image cap" style="z-index: 1;">
-                        }
-                        else
-                        {
-
-                            <img class="card-img-top" id="mission-img"
-                         src="/Images/NoImg.jpg"
-                         alt="Card image cap" style="z-index: 1;">
-                        }
-
-                    </div>
-                    <div class="card-body p-0">
-                        <h5 class="card-title mt-3 px-3 search-inp" style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">@item.EventTitle</h5>
-                        <div class="card-text px-3" style="overflow: hidden;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical;">@Html.Raw(@item.EventDesc)</div>
-                        @*<div class="d-flex justify-content-between px-3">
-                            <div>
-                            <p>@item.</p>
-                            </div>
-
-                            </div>*@
-                        <div class="d-flex flex-wrap justify-content-around align-items-center px-3 py-3">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-person-circle me-2"></i>
-                                <div>
-                                    <small>Creator:</small>
-                                    <p class="mb-0">@item.Creator</p>
-                                </div>
-                            </div>
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-geo-alt-fill me-2"></i>
-                                <div>
-                                    <small>Vanue:</small>
-                                    <p class="mb-0">@item.Vanue</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="border-top border-bottom mt-3" id="missionInfo" style="position: relative;">
-                            <div class="border text-center" id="missionPeriod">
-                                @{
-
-                                    @if (@systemdate >= @item.StartDate && @systemdate <= @item.EndDate)
-                                    {
-                                        <small>Ongoing</small>
-                                    }
-                                    else
-                                    {
-                                        <small>@item.StartDate.ToShortDateString()  to @item.EndDate.ToShortDateString()</small>
-                                    }
-                                }
-
-                            </div>
-
-                        </div>
-                        <div>
-                            <a asp-controller="Home" asp-action="UpdateEvent" class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
-                                Update
-                            </a>
-                            <a class="btn btn-primary d-flex align-items-center justify-content-center mx-3 my-2 participateBtn" onclick="deleteEvent(@item.EventId)">
-                                Delete
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        }
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" asp-append-version="true"></script>

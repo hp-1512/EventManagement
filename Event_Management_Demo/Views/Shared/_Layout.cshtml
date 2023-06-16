@@ -9,78 +9,105 @@
     <link rel="stylesheet" href="~/Event_Management_Demo.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Sidebar.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" asp-append-version="true" />
+    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXXX" crossorigin="anonymous"></script>*@
+
+    @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+
 </head>
 <body>
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 ">
-                <div class="w-100 d-flex flex-column align-items-center align-items-sm-start px-3 pt-2  min-vh-100">
-                    <a class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-decoration-none">
-                        <span class="fs-5 d-none d-sm-inline">Menu</span>
+    @*<div class="container-fluid">*@
+    <div class="wrapper">
+        <!-- Sidebar  -->
+        <nav id="sidebar">
+            <div class="sidebar-header d-flex justify-content-center">
+                <img class="rounded-circle" height="150" width="170" src="~/Images/logo.png"/>
+            </div>
+
+            <ul class="list-unstyled components">
+                <p>EventAlchemy</p>
+                <li class="active">
+                    <a asp-action="Dashboard" asp-controller="Home" class="px-0 align-middle">
+                        <img class="sidebar-icon" src="https://img.icons8.com/ios-filled/50/laptop-metrics.png"
+                             alt="laptop-metrics" /> <span class="ms-1 d-sm-inline">Dashboard</span>
                     </a>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <li class="nav-item w-100">
-                            <a asp-action="Dashboard" asp-controller="Home" class="nav-link px-0 align-middle">
-                                <img class="sidebar-icon" src="https://img.icons8.com/ios-filled/50/laptop-metrics.png" alt="laptop-metrics" /> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100">
-                            <a asp-controller="Home" asp-action="EventsPage" class="nav-link align-middle px-0">
-                                <img class="sidebar-icon" src="https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-calender-time-and-date-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png" /> <span class="ms-1 d-none d-sm-inline"> Events page</span>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100 d-none" id="createdEventsLink">
-                            <a asp-controller="Home" asp-action="CreatedEvents" class="nav-link px-0 align-middle">
-                                <img class="sidebar-icon" src="https://img.icons8.com/dotty/80/event-management.png" alt="event-management" /> <span class="ms-1 d-none d-sm-inline">My Created Events</span>
-                            </a>
-                        </li>
-                        <li class="nav-item w-100 d-none" id="participatedEventsLink">
-                            <a asp-controller="Home" asp-action="ParticipatedEvents" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <img class="sidebar-icon" src="https://img.icons8.com/ios/50/event-accepted.png" alt="event-accepted" /> <span class="ms-1 d-none d-sm-inline"> My Participated Events</span>
-                            </a>
-                        </li>
-                    </ul>
-                    <hr>
-                    <div class="dropdown pb-4">
-                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <h3><i class="bi bi-person-circle"></i></h3>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                            @*<li><a class="dropdown-item" href="#">New project...</a></li>
-                                <li><a class="dropdown-item" href="#">Settings</a></li>*@
-                            <li><h3 class="d-sm-inline mx-1" id="userName"></h3></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" asp-action="Logout" asp-controller="Account">Sign out</a></li>
+                </li>
+                <li>
+                    <a asp-controller="Home" asp-action="EventsPage" class=" align-middle px-0">
+                        <img class="sidebar-icon"
+                             src="https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-calender-time-and-date-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png" />
+                        <span class="ms-1  d-sm-inline"> Events page</span>
+                    </a>
+                </li>
+                <li class="d-none" id="createdEventsLink">
+                    <a asp-controller="Home" asp-action="CreatedEvents" class="px-0 align-middle">
+                        <img class="sidebar-icon" src="https://img.icons8.com/dotty/80/event-management.png"
+                             alt="event-management" /> <span class="ms-1 d-sm-inline">My Created Events</span>
+                    </a>
+                </li>
+                <li class="d-none" id="participatedEventsLink">
+                    <a asp-controller="Home" asp-action="ParticipatedEvents" class=" px-0 align-middle ">
+                        <img class="sidebar-icon" src="https://img.icons8.com/ios/50/event-accepted.png"
+                             alt="event-accepted" /> <span class="ms-1 d-sm-inline"> My Participated Events</span>
+                    </a>
+                </li>
+
+               
+
+            </ul>
+        </nav>
+
+        <!-- Page Content  -->
+        <div id="content">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+
+                    <button type="button" id="sidebarCollapse" class="btn btn-info">
+                        <i class="fas fa-align-left"></i>
+                        <span></span>
+                    </button>
+                    <div class="dropdown">
+
+                        <a class="dropdown-toggle btn btn-info text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span id="userName"></span></a>
+                        
+                        <ul class="dropdown-menu">
+                            <a class="w-100 d-block" asp-action="Logout" asp-controller="Account"><span class="ps-4">Logout</span></a>
                         </ul>
                     </div>
                 </div>
-            </div>
-            <div class="col py-3">
-                <div class="container">
-                    <main role="main" class="pb-3">
-                        @RenderBody()
-                    </main>
-                </div>
-            </div>
+            </nav>
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
         </div>
     </div>
+    @*</div>*@
 
 
 
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
 
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/HomeScript.js" asp-append-version="true"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             gettingUserDetails();
             gettingParticipatedEvents();
             gettingCreatedEvents();
+
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+
         });
     </script>
 </body>

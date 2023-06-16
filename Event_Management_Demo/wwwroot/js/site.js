@@ -35,3 +35,36 @@ $('.card-title').on('click', function () {
         $(this).css('overflow-y', 'scroll');
     }
 })
+
+
+
+
+function shareEvent(eventId) {
+    currentUrl = window.origin+ "/Methods/EventInvitation?eventId=" + eventId;
+    const shareData = {
+        title: "EventAlchemy",
+        text: "Greetings From EventAlchemy!!!",
+        url: currentUrl,
+    };
+    try {
+         navigator.share(shareData);
+        resultPara.textContent = "Event shared successfully";
+    } catch (err) {
+        resultPara.textContent = `Error: ${err}`;
+    }
+};
+
+
+
+$('.eventDesc').on('click', function () {
+    if ($(this).css('overflow') == 'scroll') {
+        $(this).scrollLeft(0);
+        $(this).css('overflow', 'hidden');
+        $(this).css('text-overflow', 'ellipsis');
+
+    }
+    else {
+        $(this).css('overflow', 'scroll');
+        $(this).css('text-overflow', '');
+    }
+})

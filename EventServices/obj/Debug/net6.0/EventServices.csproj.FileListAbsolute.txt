@@ -10,3 +10,15 @@ D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\ob
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\ref\EventServices.dll
 D:\HP\ci-project-main\ci-project-main\MVC\Event_Management_Demo\EventServices\obj\Debug\net6.0\EventServices.pdb
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\bin\Debug\net6.0\EventServices.deps.json
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\bin\Debug\net6.0\EventServices.dll
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\bin\Debug\net6.0\EventServices.pdb
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.csproj.AssemblyReference.cache
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.AssemblyInfoInputs.cache
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.AssemblyInfo.cs
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.csproj.CoreCompileInputs.cache
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.dll
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\refint\EventServices.dll
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\EventServices.pdb
+C:\Users\Harsh Kumar\OneDrive\Desktop\Event Management\EventServices\obj\Debug\net6.0\ref\EventServices.dll

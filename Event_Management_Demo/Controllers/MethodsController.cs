@@ -1,5 +1,6 @@
 ﻿using Event_Management.Entities.Models;
 using Event_Management.Repository.Interface;
+using IronPdf.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -8,9 +9,11 @@ namespace Event_Management_Demo.Controllers
     public class MethodsController : Controller
     {
         private readonly IDashboardRepository _dash;
-        public MethodsController(IDashboardRepository dashboardRepository)
+        private readonly IEventsPageRepository _eventsPage;
+        public MethodsController(IDashboardRepository dashboardRepository, IEventsPageRepository eventsPage)
         {
             _dash = dashboardRepository;
+            _eventsPage = eventsPage;
         }
         
         [HttpGet]
@@ -47,6 +50,31 @@ namespace Event_Management_Demo.Controllers
                 return true;
             }
             return false;
+        }
+        public IActionResult PdfDownload(long eventId)
+        {
+            var renderer = new ChromePdfRenderer();
+            renderer.RenderingOptions.PrintHtmlBackgrounds = true;
+            renderer.RenderingOptions.PaperOrientation = IronPdf.Rendering.PdfPaperOrientation.Landscape;
+            renderer.RenderingOptions.MarginTop = 0; // millimeters
+            renderer.RenderingOptions.MarginBottom = 0; // millimeters
+            renderer.RenderingOptions.MarginLeft = 0; // millimeters
+            renderer.RenderingOptions.MarginRight = 0; // millimeters
+            renderer.RenderingOptions.CssMediaType = PdfCssMediaType.Print;
+
+            var url = Url.Action("EventInvitation", "Methods", new { eventId }, Request.Scheme);
+            var pdf = renderer.RenderUrlAsPdf(url);
+
+            // You can return the PDF as a file result
+            return File(pdf.BinaryData, "application/pdf", "pixel-perfect.pdf");
+
+        }
+
+        public IActionResult EventInvitation(long eventId)
+        {
+            var eventToBeShared = _eventsPage.GetEventForUpdate(eventId);
+            
+            return View(eventToBeShared);
         }
 
     }

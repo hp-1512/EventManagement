@@ -1,0 +1,92 @@
+﻿@model Event_Management.Entities.Models.EventUpdation;
+@{
+    TimeSpan startTimeSpan = Model.StartTime; // Retrieve the TimeSpan value from the database
+    TimeSpan endTimeSpan = Model.EndTime; // Retrieve the TimeSpan value from the database
+
+    string startTime = DateTime.Today.Add(startTimeSpan).ToString("hh:mm tt");
+    string endTime = DateTime.Today.Add(endTimeSpan).ToString("hh:mm tt");
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Event Invitation</title>
+    <style>
+        body {
+            background-image: url("../Images/backpdf.jpg");
+            background-size: cover;
+            background-position: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 13% auto;
+            background-color: #fff;
+            padding: 20px;
+            opacity: 0.8;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .event-details {
+            margin-bottom: 30px;
+        }
+
+            .event-details p {
+                margin-bottom: 5px;
+            }
+
+        .note {
+            font-style: italic;
+        }
+
+        .invitation {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+            .invitation p {
+                font-weight: bold;
+            }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Event Invitation</h1>
+
+        <div class="event-details">
+            <p><strong>Title:</strong>@Model.EventTitle</p>
+            <p><strong>Description:</strong>@Model.EventDesc</p>
+            <p><strong>Venue:</strong>@Model.Vanue</p>
+            <p><strong>Start Date:</strong>@Model.StartDate.ToString("dd MMMM yyyy")</p>
+            <p><strong>Start Time:</strong>@startTime</p>
+            <p><strong>End Date:</strong> @Model.EndDate.ToString("dd MMMM yyyy")</p>
+            <p><strong>End Time:</strong> @endTime</p>
+            <p><strong>Event Creator:</strong> @Model.CreatedBy</p>
+            @if (Model.Note != null)
+            {
+                <p class="note"><strong>Note:</strong> @Model.Note.</p>
+            }
+        </div>
+
+        <div class="invitation">
+            <p>You are cordially invited to the event. We hope you can join us!</p>
+            <p>Please save the date and time.</p>
+        </div>
+    </div>
+</body>
+</html>
