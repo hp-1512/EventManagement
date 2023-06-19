@@ -8,7 +8,7 @@
 
 <div class="table-responsive">
 
-    <table class="table" >
+    <table class="table">
         <thead>
             <tr>
                 <th scope="col">Event Title</th>
@@ -24,13 +24,11 @@
         <tbody>
             @foreach (var item in Model.ListOfEvents)
             {
-
-
                 <tr>
                     <td> @item.EventTitle</td>
-                    <td class="eventDesc"  style="overflow: hidden;
-white-space: nowrap;
-text-overflow: ellipsis;max-width: 0;">@item.EventDesc</td>
+                    <td class="eventDesc" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;max-width: 0;">
+                        @item.EventDesc
+                    </td>
                     <td>@item.Creator</td>
                     <td>@item.StartDate.ToShortDateString()</td>
                     <td>@item.EndDate.ToShortDateString()</td>
@@ -48,7 +46,7 @@ text-overflow: ellipsis;max-width: 0;">@item.EventDesc</td>
                         <td>Upcoming</td>
                     }
 
-                    <td  class="px-auto">
+                    <td class="px-auto">
                         <span class="d-flex">
                             <a asp-controller="Home" asp-action="UpdateEvent" class="btn align-items-center justify-content-center mx-3 my-2 participateBtn" asp-route-eventId=@item.EventId>
                                 <i class="bi bi-pencil-fill"></i>
