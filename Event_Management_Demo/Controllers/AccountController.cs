@@ -14,12 +14,10 @@ namespace Event_Management_Demo.Controllers
     public class AccountController : Controller
     {
         private readonly IAccountRepository _acc;
-        //private readonly UserManager<RegistrationConfirmation> _userManager;
         private readonly IEmailHelper _emailHelper;
         public AccountController(IAccountRepository acc, IEmailHelper emailHelper)
         {
             _acc = acc;
-            //_userManager = userManager;
             _emailHelper = emailHelper;
         }
         #region Unique Username and Email Validation

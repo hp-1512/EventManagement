@@ -81,5 +81,15 @@ namespace Event_Management.Repository
                 return user1;
             }
         }
+        public List<string> Notificatioons()
+        {
+            var query = " SELECT noti_msg FROM tblNotifications";
+            using (var connection = _context.CreateConnection())
+            {
+
+                var notificationsList = connection.Query<string>(query).AsList();
+                return notificationsList;
+            }
+        }
     }
 }

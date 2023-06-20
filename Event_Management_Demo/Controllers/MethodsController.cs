@@ -77,5 +77,11 @@ namespace Event_Management_Demo.Controllers
             return View(eventToBeShared);
         }
 
+        [HttpGet]
+        public IActionResult NotifiactionData()
+        {
+            var noti = _dash.Notificatioons();
+            return Json(noti);
+        }
     }
 }

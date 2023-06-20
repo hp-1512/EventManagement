@@ -9,10 +9,7 @@
     <link rel="stylesheet" href="~/Event_Management_Demo.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Sidebar.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" asp-append-version="true" />
-    @*<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-XXXXX" crossorigin="anonymous"></script>*@
 
-    @*<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>*@
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
 
     <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
@@ -29,7 +26,7 @@
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header d-flex justify-content-center">
-                <img class="rounded-circle" height="150" width="170" src="~/Images/logo.png"/>
+                <img class="rounded-circle" height="150" width="170" src="~/Images/logo.png" />
             </div>
 
             <ul class="list-unstyled components">
@@ -59,9 +56,6 @@
                              alt="event-accepted" /> <span class="ms-1 d-sm-inline"> My Participated Events</span>
                     </a>
                 </li>
-
-               
-
             </ul>
         </nav>
 
@@ -75,13 +69,45 @@
                         <i class="fas fa-align-left"></i>
                         <span></span>
                     </button>
-                    <div class="dropdown">
+                    <div class="d-flex">
+                        <a class="position-relative me-4 align-items-center" role="button" id="" data-bs-toggle="modal" data-bs-target="#notification">
+                            <i class="bi bi-bell text-black fs-5"></i>
+                            <span class="badge rounded-pill badge-notification position-absolute" style="background: #F88634; top: -5px; right: -10px;" id="notifCount">0</span>
+                        </a>
+                        <div class="modal fade" id="notification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header d-flex justify-content-center align-items-center">
+                                    
+                                        <div>
+                                            <h4 class="mb-0" id="notfication-header">Notifications</h4>
+                                        </div>
+                                        @*<div>
+                                            <button id="clear-all-notification" class="border-0 bg-transparent" role="button" onclick="clearAllNotification()"><p class="mb-0">Clear all</p></button>
+                                        </div>*@
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="my-4" id="notification-message-body">
+                                            <table class="table table-borderless w-100" id="notifList">
+                                            </table>
+                                            @*<span id="older-header" class="w-100 d-flex justify-content-center bg-gray-300">Older</span>
+                                            <table class="table table-borderless w-100" id="notifListOld">
+                                            </table>*@
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer" id="notification-footer">
+                                        <button type="button" class="btn btn-outline-dark rounded-pill" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dropdown">
+                            <a class="dropdown-toggle btn btn-info text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span id="userName"></span></a>
 
-                        <a class="dropdown-toggle btn btn-info text-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><span id="userName"></span></a>
-                        
-                        <ul class="dropdown-menu">
-                            <a class="w-100 d-block" asp-action="Logout" asp-controller="Account"><span class="ps-4">Logout</span></a>
-                        </ul>
+                            <ul class="dropdown-menu">
+                                <a class="w-100 d-block" asp-action="Logout" asp-controller="Account"><span class="ps-4">Logout</span></a>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </nav>
@@ -107,7 +133,7 @@
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
             });
-
+            loadNotification();
         });
     </script>
 </body>

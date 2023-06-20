@@ -20,19 +20,24 @@ namespace Event_Management.Repository
         {
             _context = dapperContext;
         }
+        #region Events Page Data
         public List<Event>? EventsDataList(long userId)
         {
-            var query = "SELECT e.event_id AS EventId,p.user_id as ParticipatedUser,title AS EventTitle,[path] AS EventImage,first_name +' '+ last_name AS Creator,vanue AS Vanue, start_date AS StartDate, end_date AS EndDate,description AS EventDesc,max_participant AS MaxPrticipant " +
-                "FROM tblEvent e " +
-                "JOIN tblUser u ON e.created_by = u.user_id " +
-                "LEFT JOIN(select * from(SELECT *, ROW_NUMBER() OVER(partition by  event_id order by event_id) AS row_num  FROM tblEventMedia r) temp WHERE row_num = 1) AS em ON e.event_id = em.event_id " +
-                "LEFT JOIN tblParticipatedEvents AS p ON p.event_id = e.event_id AND p.user_id =@userId " +
-                "WHERE e.deleted_at IS NULL";
+            //var query = "SELECT e.event_id AS EventId,p.user_id as ParticipatedUser,title AS EventTitle,[path] AS EventImage,first_name +' '+ last_name AS Creator,vanue AS Vanue, start_date AS StartDate, end_date AS EndDate,description AS EventDesc,max_participant AS MaxPrticipant " +
+            //    "FROM tblEvent e " +
+            //    "JOIN tblUser u ON e.created_by = u.user_id " +
+            //    "LEFT JOIN(select * from(SELECT *, ROW_NUMBER() OVER(partition by  event_id order by event_id) AS row_num  FROM tblEventMedia r) temp WHERE row_num = 1) AS em ON e.event_id = em.event_id " +
+            //    "LEFT JOIN tblParticipatedEvents AS p ON p.event_id = e.event_id AND p.user_id =@userId " +
+            //    "WHERE e.deleted_at IS NULL";
+            var procedure = "u_GetAllEvents";
+            var values = new { userId };
+            
             using (var connection = _context.CreateConnection())
             {
                 try
                 {
-                    var result = connection.Query<Event>(query, new {userId = userId}).AsList();
+                    var result = connection.Query<Event>(procedure, values, commandType: CommandType.StoredProcedure).ToList();
+                    //var result = connection.Query<Event>(query, new {userId = userId}).AsList();
                     return result;
                 }
                 catch (Exception ex)
@@ -42,7 +47,9 @@ namespace Event_Management.Repository
                 }
             }
         }
-        
+        #endregion
+
+        #region participation logic
         public Event? Participate(long userId, long eventId)
         {
             try
@@ -73,45 +80,47 @@ namespace Event_Management.Repository
 
             }
         }
+        #endregion
 
-        public void DeleteImage(EventImages missionMedia)
+        #region Image and Event Media Handling
+        public void DeleteImage(EventImages eventMedia)
         {
-            string missImagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", missionMedia.Path);
+            string imagePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/EventMedia/", eventMedia.Path);
 
-            if (System.IO.File.Exists(missImagePath))
+            if (System.IO.File.Exists(imagePath))
             {
-                System.IO.File.Delete(missImagePath);
+                System.IO.File.Delete(imagePath);
             }
             var deleteImage = "DELETE FROM  tblEventMedia WHERE path = @path";
             using (var connection = _context.CreateConnection())
             {
-                var user = connection.Execute(deleteImage, new { path = missionMedia.Path});
+                var user = connection.Execute(deleteImage, new { path = eventMedia.Path});
             }
         }
         public void SaveEventImages(long eventId, List<EventImages> eventImagesList, List<IFormFile> missionImageFiles, string[] preloadedmissimage)
         {
-            foreach (var missionMedia in eventImagesList)
+            foreach (var eventMedia in eventImagesList)
             {
 
                 if (preloadedmissimage.Length < 1)
                 {
-                    DeleteImage(missionMedia);
+                    DeleteImage(eventMedia);
                 }
                 else
                 {
                     bool flag = false;
                     for (int i = 0; i < preloadedmissimage.Length; i++)
                     {
-                        string imgName = preloadedmissimage[i][14..];
+                        string imgName = preloadedmissimage[i][12..];
 
-                        if (imgName.Equals(missionMedia.Path))
+                        if (imgName.Equals(eventMedia.Path))
                         {
                             flag = true;
                         }
                     }
                     if (!flag)
                     {
-                        DeleteImage(missionMedia);
+                        DeleteImage(eventMedia);
                     }
                 }
 
@@ -143,13 +152,15 @@ namespace Event_Management.Repository
                 }
             }
         }
+        #endregion
         public bool CreateEventDb(EventCreation eventObj, List<IFormFile> eventImages, string[] preloaded)
         {
             try
             {
-                var queryEvent = "INSERT INTO tblEvent([title],[description],[note],[start_date],[end_date],[start_time],[end_time],[vanue],[created_by],[max_participant])" +
-                        "VALUES(@eventTitle,@eventDesc,@note,@startDate,@endDate,@startTime,@endTime,@vanue,@createdBy,@maxParticipant)" +
-                        "SELECT CAST(SCOPE_IDENTITY() as bigint)";
+                var queryEvent = "DECLARE @InsertedRows AS TABLE (Id int); " +
+                    "INSERT INTO tblEvent([title],[description],[note],[start_date],[end_date],[start_time],[end_time],[vanue],[created_by],[max_participant]) OUTPUT INSERTED.event_id INTO @InsertedRows " +
+                        "VALUES(@eventTitle,@eventDesc,@note,@startDate,@endDate,@startTime,@endTime,@vanue,@createdBy,@maxParticipant); " +
+                        "SELECT Id FROM @InsertedRows";
 
                 var parameters = new DynamicParameters();
                 parameters.Add("@eventTitle", eventObj.EventTitle, DbType.String);
@@ -173,7 +184,7 @@ namespace Event_Management.Repository
                 }
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return false;
             }

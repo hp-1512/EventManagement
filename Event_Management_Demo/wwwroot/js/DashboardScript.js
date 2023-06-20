@@ -15,7 +15,7 @@ function DashboardData() {
         url: "/Methods/EventsDataPieChart",
         method: "GET",
         success: function (result) {
-            console.log(result);
+           // console.log(result);
             new Chart("eventsPieChartContainer", {
                 type: 'pie',
                 data: {
@@ -47,7 +47,7 @@ function DashboardData() {
         url: "/Methods/UsersDataPieChart",
         method: "GET",
         success: function (data) {
-            console.log(data);
+           // console.log(data);
             new Chart("usersPieChartContainer", {
                 type: 'pie',
                 data: {
@@ -79,7 +79,7 @@ function DashboardData() {
         url: "/Methods/EventsDataBarChart",
         method: "GET",
         success: function (result) {
-            console.log(result);
+           // console.log(result);
             var months = [];
             var values = [];
             $.each(result, function (key, item) {
