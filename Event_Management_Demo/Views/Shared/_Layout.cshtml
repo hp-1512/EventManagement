@@ -32,13 +32,13 @@
             <ul class="list-unstyled components">
                 <p>EventAlchemy</p>
                 <li class="active">
-                    <a asp-action="Dashboard" asp-controller="Home" class="px-0 align-middle">
+                    <a asp-action="Dashboard" asp-controller="Home" class=" px-0 align-middle">
                         <img class="sidebar-icon" src="https://img.icons8.com/ios-filled/50/laptop-metrics.png"
                              alt="laptop-metrics" /> <span class="ms-1 d-sm-inline">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a asp-controller="Home" asp-action="EventsPage" class=" align-middle px-0">
+                    <a asp-controller="Home" asp-action="EventsPage" class="align-middle px-0">
                         <img class="sidebar-icon"
                              src="https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-calender-time-and-date-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png" />
                         <span class="ms-1  d-sm-inline"> Events page</span>
@@ -51,7 +51,7 @@
                     </a>
                 </li>
                 <li class="d-none" id="participatedEventsLink">
-                    <a asp-controller="Home" asp-action="ParticipatedEvents" class=" px-0 align-middle ">
+                    <a asp-controller="Home" asp-action="ParticipatedEvents" class="px-0 align-middle ">
                         <img class="sidebar-icon" src="https://img.icons8.com/ios/50/event-accepted.png"
                              alt="event-accepted" /> <span class="ms-1 d-sm-inline"> My Participated Events</span>
                     </a>
@@ -77,14 +77,14 @@
                         <div class="modal fade" id="notification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                 <div class="modal-content">
-                                    <div class="modal-header d-flex justify-content-center align-items-center">
+                                    <div class="modal-header d-flex justify-content-between align-items-center">
                                     
                                         <div>
                                             <h4 class="mb-0" id="notfication-header">Notifications</h4>
                                         </div>
-                                        @*<div>
+                                        <div>
                                             <button id="clear-all-notification" class="border-0 bg-transparent" role="button" onclick="clearAllNotification()"><p class="mb-0">Clear all</p></button>
-                                        </div>*@
+                                        </div>
                                     </div>
                                     <div class="modal-body">
                                         <div class="my-4" id="notification-message-body">

@@ -80,8 +80,29 @@ namespace Event_Management_Demo.Controllers
         [HttpGet]
         public IActionResult NotifiactionData()
         {
-            var noti = _dash.Notificatioons();
+            var thisUser = LoggedUser();
+            var noti = _dash.Notifications(thisUser.UserId);
             return Json(noti);
+        }
+        [HttpPost]
+        public bool MarkNotifAsRead(long notiId)
+        {
+            var updateFlag = _dash.UpdateReadFlagNotification(notiId);
+            if (updateFlag)
+            {
+                return true;
+            }
+            return false;
+        }
+        public bool ClearAllNotification()
+        {
+            var thisUser = LoggedUser();
+            var flag = _dash.ClearNotification(thisUser.UserId);
+            if (flag)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

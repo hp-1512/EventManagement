@@ -283,7 +283,7 @@ namespace Event_Management.Repository
                 return eventMailingData;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return null;
             }

@@ -238,3 +238,7 @@ ul .CTAs {
     bottom: 20px;
     right: 10px;
 }
+
+#clear-all-notification :hover{
+    color:black;
+}

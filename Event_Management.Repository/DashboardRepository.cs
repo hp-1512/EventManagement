@@ -81,14 +81,51 @@ namespace Event_Management.Repository
                 return user1;
             }
         }
-        public List<string> Notificatioons()
+        public Notification Notifications(long userId)
         {
-            var query = " SELECT noti_msg FROM tblNotifications";
+            var query = " SELECT noti_id AS NotifId,noti_msg AS NotifMsg, isRead AS IsRead FROM tblNotifications WHERE user_id = @userId ORDER BY created_at;";
             using (var connection = _context.CreateConnection())
             {
 
-                var notificationsList = connection.Query<string>(query).AsList();
-                return notificationsList;
+                var notificationsList = connection.Query<NotificationList>(query, new { userId }).AsList();
+                Notification notificationObj = new()
+                {
+                    NotificationData = notificationsList,
+                    NotificationCout = notificationsList.Count(noti => noti.IsRead == 0),
+                };
+                return notificationObj;
+            }
+        }
+        public bool UpdateReadFlagNotification(long notiId)
+        {
+            var query = "UPDATE tblNotifications SET isRead = 1 WHERE noti_id = @notiId";
+            using (var connection = _context.CreateConnection())
+            {
+                try
+                {
+                    connection.Execute(query, new { notiId });
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    return false;
+                }
+            }
+        }
+        public bool ClearNotification(long userId)
+        {
+            var query = "DELETE FROM tblNotifications WHERE user_id = @userId";
+            using (var connection = _context.CreateConnection())
+            {
+                try
+                {
+                    connection.Execute(query, new { userId });
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
             }
         }
     }

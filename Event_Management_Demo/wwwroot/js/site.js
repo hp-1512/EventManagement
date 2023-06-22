@@ -33,24 +33,23 @@ $('.card-title').on('click', function () {
 })
 
 
-
+//-------------------------Share an Event------------------------
 
 function shareEvent(eventId) {
-    currentUrl = window.origin+ "/Methods/EventInvitation?eventId=" + eventId;
+    currentUrl = window.origin + "/Methods/EventInvitation?eventId=" + eventId;
     const shareData = {
         title: "EventAlchemy",
         text: "Greetings From EventAlchemy!!!",
         url: currentUrl,
     };
     try {
-         navigator.share(shareData);
-        resultPara.textContent = "Event shared successfully";
+        navigator.share(shareData);
     } catch (err) {
-        resultPara.textContent = `Error: ${err}`;
+        //resultPara.textContent = `Error: ${err}`;
     }
 };
 
-
+//-------------------------Making Description Horizontally Scrollable on Created Events Page------------------------
 
 $('.eventDesc').on('click', function () {
     if ($(this).css('overflow') == 'scroll') {
@@ -59,51 +58,78 @@ $('.eventDesc').on('click', function () {
 
     }
     else {
-        $(this).css({'overflow': 'scroll', 'text-overflow': ''});
+        $(this).css({ 'overflow': 'scroll', 'text-overflow': '' });
     }
 })
 
-
-
-
-// notification
-
-//function isRead(NotallId) {
-//    if (NotallId > 0) {
-//        $.ajax({
-//            type: 'POST',
-//            url: '/Notification/MarkNotAsRead',
-//            data: { "notId": NotallId },
-//            success: function () {
-//                $('#notifType').text('');
-//                $('#notifList').text('');
-//                $('#notifListOld').text('');
-//                loadNotification();
-//            },
-//            error: function () {
-//                console.log('error');
-//            },
-//        });
-//    }
-//}
+//-------------------------Notifications------------------------
 
 function loadNotification() {
     $.ajax({
         type: 'GET',
         url: '/Methods/NotifiactionData',
         success: function (data) {
-            $('#notifCount').text(data.length);
-            $.each(data, function (index, notifType) {
+            $('#notifCount').text(data.notificationCout);
+            if (data.notificationData.length == 0) {
+                $('#clear-all-notification').attr('disabled', true);
                 $('#notifList').append(`<tr class="border-1 d-flex align-items-center" style="height: 60px;">
-                                                                            <td style="width: 10%;"><i class="bi bi-chat-text fs-5"></i></td>
-                                                                                <td style="width: 80%;">`+notifType+`</td>
+                                                                                <td style="width: 100%; text-align:center;">No any Notifications for Now...</td>
                                                                 </tr>
                                                          `);
-                //$('#notifList').append(`<li class="form-check mb-2 p-0 d-flex align-items-center justify-content-between">
-                //                                                        <label class="form-check-label ms-3" for="">`+ notifType + `</label>
-                //                                                </li>
-                //                                 `);
-            });
+
+            }
+            else {
+                $.each(data.notificationData, function (index, notifData) {
+                    $('#notifList').append(`<tr class="border-1 d-flex align-items-center" style="height: 60px;">
+                                                                            <td style="width: 10%;"><i class="bi bi-chat-text fs-5"></i></td>
+                                                                                <td style="width: 80%;">`+ notifData.notifMsg + `</td>
+                                                                            <td class="text-end" id="markAsReadIcon`+ notifData.notifId + `" style="width: 10%;"></td>
+                                                                </tr>
+                                                         `);
+
+                    if (notifData.isRead == 0) {
+                        $("#markAsReadIcon" + notifData.notifId).append(`<button class="border-0 bg-transparent" onclick="isRead(` + notifData.notifId + `)">
+                                                                            <i class="bi bi-check-circle-fill fs-5" style="color: #F88634;"></i>
+                                                                             </button>`);
+                    }
+                    else {
+                        $('#markAsReadIcon' + notifData.notifId).append(`<i class="bi bi-check-circle-fill fs-5" style="color: #b0b0b0;"></i>`);
+                    }
+                });
+            }
+        },
+        error: function () {
+            console.log('error');
+        },
+    });
+}
+
+function isRead(NotallId) {
+    if (NotallId > 0) {
+        $.ajax({
+            type: 'POST',
+            url: '/Methods/MarkNotifAsRead',
+            data: { "notiId": NotallId },
+            success: function (result) {
+                if (result) {
+                    $('#notifList').text('');
+                    loadNotification();
+                }
+            },
+            error: function () {
+                console.log('error');
+            },
+        });
+    }
+}
+
+function clearAllNotification() {
+    $.ajax({
+        type: 'GET',
+        url: '/Methods/ClearAllNotification',
+        success: function () {
+            $('#notifList').text('');
+            loadNotification();
         },
         error: function () {
             console.log('error');
