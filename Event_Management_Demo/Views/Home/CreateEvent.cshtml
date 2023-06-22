@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Create Event";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -38,7 +37,7 @@
                 </div>
                 <div class="form-group">
                     <label class="form-label" asp-for="Vanue">Event Vanue</label>
-                    <input asp-for="Vanue" type="text" class="form-control" id="eventVanue"
+                    <input asp-for="Vanue" type="text" class="form-control" id="addressInput"
                            placeholder="Enter Event Vanue">
                     <span class="text-danger" asp-validation-for="Vanue"></span>
                 </div>
@@ -62,7 +61,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label class="mb-1" asp-for="StartTime">Select Start Time</label>
-                            <input asp-for="StartTime"  type="time" class="form-control" id="startTime"  onchange="setEndTime()">
+                            <input asp-for="StartTime" type="time" class="form-control" id="startTime" onchange="setEndTime()">
                             <span asp-validation-for="StartTime" class="text-danger"></span>
                         </div>
                     </div>
@@ -109,11 +108,30 @@
         </form>
     </div>
 </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/places.js@1.19.0"></script>
 <script src="~/js/CreateEvent.js"></script>
 <script>
-    $(document).ready(function(){
-        $(".preview-event-images").imageUploader({});
-        loggedUser();
+      $(document).ready(function(){
+          $(".preview-event-images").imageUploader({});
+          loggedUser();
+          // Initialize the autocomplete widget
+    var placesAutocomplete = places({
+      container: document.getElementById('addressInput'),
+      templates: {
+        value: function(suggestion) {
+          return suggestion.name;
+        }
+      }
+    }).configure({
+      type: 'address',
     });
+
+    // Handle place selection event
+    placesAutocomplete.on('change', function(e) {
+      var selectedAddress = e.suggestion.value;
+    });
+      });
 
 </script>

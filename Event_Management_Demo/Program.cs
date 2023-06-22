@@ -20,6 +20,7 @@ builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IEventsPageRepository, EventsPageRepository>();
 builder.Services.AddScoped<IEmailHelper, EmailHelper>();
+builder.Services.AddScoped<INominatimLocation, NominatimLocation>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -34,7 +35,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 });
 builder.Services.AddSession(option =>
 {
-    option.IdleTimeout = TimeSpan.FromMinutes(5);
+    option.IdleTimeout = TimeSpan.FromMinutes(1);
     option.Cookie.HttpOnly = true;
     option.Cookie.IsEssential = true;
 });

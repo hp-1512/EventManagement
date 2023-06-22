@@ -84,9 +84,10 @@
                             </div>
                             <div class="d-flex align-items-center">
                                 <i class="bi bi-geo-alt-fill me-2"></i>
-                                <div>
+                                <div style="  max-width: 160px;  width: 160px; max-height: 80px;height: 80px; overflow:hidden; align-items:center">
                                     <small>Vanue:</small>
-                                    <p class="mb-0">@item.Vanue</p>
+                                    <a href="@Url.Action("RedirectMaps", "Home", new { address = @item.Vanue})" target="_blank"><p class="mb-0">@item.Vanue</p></a>
+                                    
                                 </div>
                             </div>
                         </div>

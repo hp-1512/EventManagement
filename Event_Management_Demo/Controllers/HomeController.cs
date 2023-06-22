@@ -13,10 +13,12 @@ namespace Event_Management_Demo.Controllers
     {
         private readonly IEventsPageRepository _eventsPage;
         private readonly IEmailHelper _emailHelper;
-        public HomeController(IEventsPageRepository EventsPage, IEmailHelper emailHelper, IDashboardRepository dashboardRepository) : base(dashboardRepository,EventsPage)
+        private readonly INominatimLocation _nominatimHelper;
+        public HomeController(IEventsPageRepository EventsPage, IEmailHelper emailHelper, IDashboardRepository dashboardRepository, INominatimLocation nominatimHelper) : base(dashboardRepository,EventsPage)
         {
             _eventsPage = EventsPage;
             _emailHelper = emailHelper;
+            _nominatimHelper = nominatimHelper;
         }
 
         public IActionResult Dashboard()
@@ -201,6 +203,20 @@ namespace Event_Management_Demo.Controllers
         }
         #endregion
 
+        #region Location tracking
+        public async Task<IActionResult> RedirectMaps(string address)
+        {
+            var mapUrl = await _nominatimHelper.GetMapUrlForAddress(address);
+            if (!string.IsNullOrEmpty(mapUrl))
+            {
+                return Redirect(mapUrl);
+            }
 
+            // Handle the case when map URL is not available or the request fails
+            // Display an error message or redirect to a fallback page
+
+            return View("~/Views/Email/Error.cshtml");
+        }
+        #endregion
     }
 }
