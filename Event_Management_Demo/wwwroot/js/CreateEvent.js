@@ -226,7 +226,7 @@ function loggedUser() {
         url: "/Methods/LoggedUser",
         method: "GET",
         success: function (result) {
-            console.log(result);
+            //console.log(result);
             document.getElementById('createdBy').value = result.userId;
             document.getElementById('createdByForDisplay').value = result.userName;
 

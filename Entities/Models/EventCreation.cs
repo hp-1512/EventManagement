@@ -24,6 +24,7 @@ namespace Event_Management.Entities.Models
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         [Required]
+        [Remote("IsValidAddress", "Home", AdditionalFields = "vanue", ErrorMessage = "Address is not Confirmed! try to paste it from Google Maps.")]
         public string? Vanue { get; set; }
         public string? CreatedBy { get; set; }
         [Required]

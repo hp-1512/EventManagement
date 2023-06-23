@@ -14,13 +14,10 @@ namespace EventServices
 
         public async Task<string> GetMapUrlForAddress(string address)
         {
-            var client = new RestClient(NominatimBaseUrl);
-            var request = new RestRequest("search", Method.Get);
-            request.AddParameter("format", "json");
-            request.AddParameter("q", address);
 
-            var response = await client.ExecuteAsync(request);
-            if (response.IsSuccessful && response.Content!="[]")
+
+            var response = IfCorrectAddress(address);
+            if (response.Result.IsSuccessful/* && response.Content!="[]"*/)
             {
                 var mapUrl = $"https://maps.google.com/maps?q={address}";
                 //var mapUrl = $"https://nominatim.openstreetmap.org/search?q={address}";
@@ -30,6 +27,15 @@ namespace EventServices
 
             return null;
         }
+        public async Task<RestResponse> IfCorrectAddress(string address)
+        {
+            var client = new RestClient(NominatimBaseUrl);
+            var request = new RestRequest("search", Method.Get);
+            request.AddParameter("format", "json");
+            request.AddParameter("q", address);
+            var result = await client.ExecuteAsync(request);
+            return result;
+        } 
         private string GetMapUrlFromResponse(string jsonResponse)
         {
             // Parse the JSON response to extract the latitude and longitude

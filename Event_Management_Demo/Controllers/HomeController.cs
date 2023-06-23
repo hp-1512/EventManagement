@@ -4,6 +4,7 @@ using EventServices.Interface;
 using IronPdf.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Globalization;
 
 namespace Event_Management_Demo.Controllers
@@ -203,7 +204,7 @@ namespace Event_Management_Demo.Controllers
         }
         #endregion
 
-        #region Location tracking
+        #region Location tracking and Checking if Valid or not
         public async Task<IActionResult> RedirectMaps(string address)
         {
             var mapUrl = await _nominatimHelper.GetMapUrlForAddress(address);
@@ -216,6 +217,16 @@ namespace Event_Management_Demo.Controllers
             // Display an error message or redirect to a fallback page
 
             return View("~/Views/Email/Error.cshtml");
+        }
+
+        public bool IsValidAddress(string vanue)
+        {
+            var mapUrl =  _nominatimHelper.IfCorrectAddress(vanue);
+            if ((mapUrl.Result.Content != "[]"))
+            {
+                return true;
+            }
+            return false;
         }
         #endregion
     }
